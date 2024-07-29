@@ -22,11 +22,15 @@ export class KinopoiskApi {
   }
 
   async getByKeyword(word: string, page: string) {
-    const film = await this.fetch('/api/v2.1/films/search-by-keyword?', 'GET', {
-      keyword: word,
-      page: page,
-    })
-    console.log('film -> ', film)
+    const films = await this.fetch(
+      '/api/v2.1/films/search-by-keyword?',
+      'GET',
+      {
+        keyword: word,
+        page: page,
+      },
+    )
+    return films
   }
 
   async getCollections(
@@ -37,6 +41,6 @@ export class KinopoiskApi {
       type: collectionName,
       page,
     })
-    console.log('collection -> ', collection)
+    return collection
   }
 }
