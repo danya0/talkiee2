@@ -9,6 +9,9 @@
 
 <script lang="ts" setup>
 import MovieGrid from '~/components/movie/movieGrid/movieGrid.vue'
+import { KinopoiskApi } from '~/library/kinopoiskApi'
 
 const searchText = ref('')
+
+const kp = new KinopoiskApi()
 </script>
