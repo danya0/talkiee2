@@ -1,7 +1,11 @@
 <template>
-  <section class="flex flex-col justify-center">
-    <div class="w-full h-[500px] bg-blue-300 text-black">main page</div>
-  </section>
+  <Container>
+    <section class="flex flex-col items-center gap-y-5">
+      <SearchBox class="w-1/2" v-model="searchText" />
+    </section>
+  </Container>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const searchText = ref('')
+</script>
