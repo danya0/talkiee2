@@ -2,7 +2,7 @@
   <Container>
     <section class="flex flex-col items-center gap-y-5">
       <SearchBox class="w-1/2" v-model="searchText" />
-      <MovieGrid :movie-list="movieList" />
+      <MovieGrid title="Популярные фильмы" :movie-list="movieList" />
     </section>
   </Container>
 </template>

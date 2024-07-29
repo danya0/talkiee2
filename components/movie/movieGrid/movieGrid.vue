@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-xl mb-8">Популярные фильмы</p>
+    <p v-if="title" class="text-xl mb-8">{{ title }}</p>
     <div class="w-full grid grid-cols-6 gap-y-4 gap-x-8">
       <MovieCard
         v-for="item in props.movieList"
@@ -19,7 +19,7 @@ import { useMainPageStore } from '~/store/mainPageStore'
 
 const store = useMainPageStore()
 
-const props = defineProps<{ movieList: Movie[] }>()
+const props = defineProps<{ movieList: Movie[]; title?: string }>()
 
 const favoriteToggle = (movie: Movie) => {
   store.favoriteToggle(movie)
