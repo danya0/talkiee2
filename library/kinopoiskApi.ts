@@ -1,3 +1,6 @@
+import type { Movie } from '~/types/movie'
+import { kinopoiskApiToMovieConverter } from '~/converters/kinopoiskApiToMovieConverter'
+
 export class KinopoiskApi {
   private xKey = 'c20595a1-3d8c-4cbd-92eb-fd7b0fa75c67'
   private baseUrl = 'https://kinopoiskapiunofficial.tech'
@@ -36,11 +39,12 @@ export class KinopoiskApi {
   async getCollections(
     page: string,
     collectionName: string = 'TOP_250_MOVIES',
-  ) {
+  ): Promise<Movie[]> {
     const collection = await this.fetch('/api/v2.2/films/collections?', 'GET', {
       type: collectionName,
       page,
     })
-    return collection
+    console.log('collection -> ', collection)
+    return collection.items.map(kinopoiskApiToMovieConverter)
   }
 }
