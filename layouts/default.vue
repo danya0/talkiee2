@@ -1,6 +1,9 @@
 <template>
-  <header>
-    <h1 class="text-6xl">test</h1>
-  </header>
-  <slot />
+  <div>
+    <MyHeader />
+    <slot />
+  </div>
 </template>
+<script setup lang="ts">
+import MyHeader from '~/components/header/myHeader.vue'
+</script>

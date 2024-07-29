@@ -9,4 +9,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+  },
 })

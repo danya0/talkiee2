@@ -11,8 +11,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkBg: '#0f172a',
-        lightBg: '#ffffff',
+        'dark-bg': '#0f172a',
+        'light-bg': '#ffffff',
       },
     },
   },
