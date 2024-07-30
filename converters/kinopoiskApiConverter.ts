@@ -1,12 +1,13 @@
 import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 
 export function kinopoiskApiConverter(obj: any): Movie {
+  let rating = obj.ratingKinopoisk || obj.ratingImbd || obj.rating || 0
+  if (rating === 'null') rating = undefined
   return {
     kinopoiskId: obj.kinopoiskId || obj.filmId,
     countries: obj.countries,
     genres: obj.genres || [],
-    ratingKinopoisk: obj.ratingKinopoisk || 0,
-    ratingImbd: obj.ratingImbd || 0,
+    rating: rating,
     year: obj.year || 'no year',
     type: obj.type || 'unknown type',
     posterUrl: obj.posterUrl || '',
