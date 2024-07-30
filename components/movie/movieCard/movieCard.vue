@@ -9,7 +9,9 @@
       <div
         class="transition-opacity absolute group-hover:opacity-30 top-0 left-0 h-full w-full bg-black opacity-0"
       >
-        <button @click="favoriteToggle">{{ favoriteTitle }} favorite</button>
+        <button v-if="false" @click="favoriteToggle">
+          {{ favoriteTitle }} favorite
+        </button>
       </div>
     </div>
     <p class="text-white/70 line-clamp-2">{{ item.name }}</p>
