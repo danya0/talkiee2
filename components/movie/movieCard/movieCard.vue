@@ -1,6 +1,11 @@
 <template>
   <div class="cursor-pointer grid group gap-y-1 max-w-[230px]">
     <div class="relative rounded-md overflow-hidden h-[340px]">
+      <MovieBookmark
+        :status="item.favorite"
+        @click.stop="favoriteToggle"
+        class="absolute top-0 right-0 z-10"
+      />
       <MovieRating
         v-if="item.rating"
         class="absolute left-2 top-2 z-10"
@@ -26,6 +31,7 @@
 <script lang="ts" setup>
 import type { Movie } from '~/types/movie'
 import MovieRating from '~/components/movie/movieCard/movieRating.vue'
+import MovieBookmark from '~/components/movie/movieCard/movieBookmark.vue'
 
 const props = defineProps<{ item: Movie }>()
 const emits = defineEmits(['favoriteToggle'])
