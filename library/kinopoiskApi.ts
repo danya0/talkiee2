@@ -24,7 +24,7 @@ export class KinopoiskApi {
     return json
   }
 
-  async getByKeyword(word: string, page: string) {
+  async getByKeyword(word: string, page: string): Promise<Movie[]> {
     const films = await this.fetch(
       '/api/v2.1/films/search-by-keyword?',
       'GET',
@@ -33,7 +33,8 @@ export class KinopoiskApi {
         page: page,
       },
     )
-    return films
+    // todo: внутри films лежит pagesCount для пагинации
+    return films.films
   }
 
   async getCollections(

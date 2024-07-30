@@ -15,9 +15,9 @@
 <script setup lang="ts">
 import MovieCard from '~/components/movie/movieCard/movieCard.vue'
 import type { Movie } from '~/types/movie'
-import { useMainPageStore } from '~/store/mainPageStore'
+import { useMainStore } from '~/store/mainPageStore'
 
-const store = useMainPageStore()
+const store = useMainStore()
 
 const props = defineProps<{ movieList: Movie[]; title?: string }>()
 

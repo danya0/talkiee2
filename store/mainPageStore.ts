@@ -5,9 +5,10 @@ import { LsParser } from '~/utils/lsParser'
 
 const kp = new KinopoiskApi()
 
-export const useMainPageStore = defineStore('mainPage', {
+export const useMainStore = defineStore('main', {
   state: () => ({
     movieList: [] as Movie[],
+    searchList: [] as Movie[],
     favoriteList: (LsParser.get('favoriteList') || []) as Movie[],
   }),
   getters: {
@@ -22,6 +23,11 @@ export const useMainPageStore = defineStore('mainPage', {
     },
   },
   actions: {
+    findByName(name: string) {
+      kp.getByKeyword(name, '1').then((res) => {
+        this.$state.searchList = res
+      })
+    },
     loadFilms(page: string) {
       kp.getCollections(page).then((res) => {
         this.$state.movieList = res

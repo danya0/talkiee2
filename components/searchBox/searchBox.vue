@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-md bg-black/20 flex gap-x-4 overflow-hidden py-2 px-4">
-    <div class="cursor-pointer">
+    <div class="cursor-pointer" @click="search">
       <svg
         class="h-[24px] w-[24px]"
         viewBox="0 0 24 24"
@@ -30,10 +30,14 @@
       placeholder="Быстрый поиск..."
       class="grow bg-transparent outline-0"
       v-model="model"
+      @keydown.enter="search"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
 const model = defineModel()
+const emits = defineEmits(['search'])
+
+const search = () => emits('search')
 </script>
