@@ -1,5 +1,5 @@
 <template>
-  <div class="cursor-pointer grid group gap-y-1">
+  <div class="cursor-pointer grid group gap-y-1 max-w-[230px]">
     <div class="relative rounded-md overflow-hidden h-[340px]">
       <img
         class="w-full h-full transition-transform group-hover:scale-105 object-fill"

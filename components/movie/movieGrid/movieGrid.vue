@@ -1,7 +1,7 @@
 <template>
   <div>
     <p v-if="title" class="text-xl mb-8">{{ title }}</p>
-    <div class="w-full grid grid-cols-6 gap-y-4 gap-x-8">
+    <div class="w-full grid grid-cols-5 gap-y-4 gap-x-8">
       <MovieCard
         v-for="item in props.movieList"
         :key="item.kinopoiskId"

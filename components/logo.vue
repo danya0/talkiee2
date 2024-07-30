@@ -1,8 +1,8 @@
 <template>
-  <div :class="{ 'text-center': props.center }">
-    <h1 class="logo-title text-[6rem] -mb-6 text-[#4a6fb5]">Talkiee</h1>
-    <h2 class="logo-subtitle text-3xl text-[#50688c]">Домашний кинотеатр</h2>
-  </div>
+  <router-link to="/" class="flex items-center gap-x-3">
+    <h1 class="logo-title text-[2rem] text-[#4a6fb5]">Talkiee</h1>
+    <div class="border-2 border-[#50688c] rounded-md px-2 py-1">v2.0</div>
+  </router-link>
 </template>
 
 <script lang="ts" setup>
