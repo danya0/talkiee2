@@ -7,7 +7,11 @@
       </button>
     </div>
     <div class="flex gap-x-12 max-h-[600px]">
-      <div class="bg-blue-300 grow h-[600px]"></div>
+      <div
+        data-kinobox="auto"
+        :data-kinopoisk="movie.kinopoiskId"
+        class="h-auto w-[70%]"
+      />
       <div class="w-[30%] flex flex-col overflow-y-hidden">
         <label>
           <input v-model="noSpoiler" type="checkbox" />
@@ -81,5 +85,10 @@ onMounted(async () => {
     }),
   )
   images.value = await kp.getMovieImages(+movieId.value)
+
+  const plugin = document.createElement('script')
+  plugin.setAttribute('src', '/kinobox.min.js')
+  plugin.async = true
+  document.head.appendChild(plugin)
 })
 </script>

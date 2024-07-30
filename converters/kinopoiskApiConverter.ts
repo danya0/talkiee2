@@ -2,7 +2,7 @@ import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 
 export function kinopoiskApiConverter(obj: any): Movie {
   return {
-    kinopoiskId: obj.kinopoiskId,
+    kinopoiskId: obj.kinopoiskId || obj.filmId,
     countries: obj.countries,
     genres: obj.genres || [],
     ratingKinopoisk: obj.ratingKinopoisk || 0,

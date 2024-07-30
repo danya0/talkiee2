@@ -48,7 +48,7 @@ export class KinopoiskApi {
       },
     )
     // todo: внутри films лежит pagesCount для пагинации
-    return films.films
+    return films.films.map(kinopoiskApiConverter)
   }
 
   async getCollections(
