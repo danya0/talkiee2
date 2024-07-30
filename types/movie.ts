@@ -20,3 +20,9 @@ export type MovieImage = {
   imageUrl: string
   previewUrl: string
 }
+
+export type MovieFact = {
+  text: string
+  type: string
+  spoiler: boolean
+}

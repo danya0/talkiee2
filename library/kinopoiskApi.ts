@@ -1,6 +1,7 @@
-import type { Movie, MovieImage } from '~/types/movie'
+import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 import {
   kinopoiskApiConverter,
+  kinopoiskFactConverter,
   kinopoiskImageConverter,
 } from '~/converters/kinopoiskApiConverter'
 
@@ -25,6 +26,16 @@ export class KinopoiskApi {
     )
     const json = await res.json()
     return json
+  }
+
+  async getById(id: string): Promise<Movie> {
+    const movie = await this.fetch(`/api/v2.2/films/${id}`, 'GET')
+    return kinopoiskApiConverter(movie)
+  }
+
+  async getFacts(id: string): Promise<MovieFact[]> {
+    const facts = await this.fetch(`/api/v2.2/films/${id}/facts`, 'GET')
+    return facts.items.map((fact: any) => kinopoiskFactConverter(fact))
   }
 
   async getByKeyword(word: string, page: string): Promise<Movie[]> {
@@ -52,7 +63,7 @@ export class KinopoiskApi {
     return collection.items.map(kinopoiskApiConverter)
   }
 
-  async getMovieImages(movieId: number): Promise<MovieImage> {
+  async getMovieImages(movieId: number): Promise<MovieImage[]> {
     const images = await this.fetch(
       `/api/v2.2/films/${movieId}/images?`,
       'GET',

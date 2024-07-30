@@ -1,4 +1,4 @@
-import type { Movie, MovieImage } from '~/types/movie'
+import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 
 export function kinopoiskApiConverter(obj: any): Movie {
   return {
@@ -19,6 +19,14 @@ export function kinopoiskApiConverter(obj: any): Movie {
 export function kinopoiskImageConverter(item: any): MovieImage {
   return {
     imageUrl: item?.imageUrl,
-    previewUrl: item?.imageUrlPreview,
+    previewUrl: item?.previewUrl,
+  }
+}
+
+export function kinopoiskFactConverter(item: any): MovieFact {
+  return {
+    type: item?.type,
+    spoiler: item?.spoiler,
+    text: item?.text,
   }
 }

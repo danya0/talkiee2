@@ -7,6 +7,7 @@
         :key="item.kinopoiskId"
         :item="item"
         @favoriteToggle="() => favoriteToggle(item)"
+        @click="goToMoviePage(item.kinopoiskId)"
       />
     </div>
   </div>
@@ -18,10 +19,15 @@ import type { Movie } from '~/types/movie'
 import { useMainStore } from '~/store/mainPageStore'
 
 const store = useMainStore()
-
+const router = useRouter()
 const props = defineProps<{ movieList: Movie[]; title?: string }>()
 
 const favoriteToggle = (movie: Movie) => {
   store.favoriteToggle(movie)
+}
+
+const goToMoviePage = (movieId: number) => {
+  console.log('fsdk')
+  router.push(`/watch/${movieId}`)
 }
 </script>
