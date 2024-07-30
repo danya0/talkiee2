@@ -1,7 +1,10 @@
 <template>
   <Container class="flex flex-col items-center">
     <SearchBox class="w-1/2" v-model="searchText" @search="search" />
-    <MovieGrid :movie-list="searchList" />
+    <div class="text-6xl" v-if="notFind">
+      По вашему запросу ничего не найдено 😢
+    </div>
+    <MovieGrid v-else :movie-list="searchList" />
   </Container>
 </template>
 
@@ -16,6 +19,7 @@ const searchText = ref('')
 const store = useMainStore()
 
 const searchList = computed(() => store.searchList)
+const notFind = computed<boolean>(() => searchList.value.length < 1)
 
 onMounted(() => {
   searchText.value = `${route.query.s}`

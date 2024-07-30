@@ -1,6 +1,6 @@
-import type { Movie } from '~/types/movie'
+import type { Movie, MovieImage } from '~/types/movie'
 
-export function kinopoiskApiToMovieConverter(obj: any): Movie {
+export function kinopoiskApiConverter(obj: any): Movie {
   return {
     kinopoiskId: obj.kinopoiskId,
     countries: obj.countries,
@@ -13,5 +13,12 @@ export function kinopoiskApiToMovieConverter(obj: any): Movie {
     posterUrlPreview: obj.posterUrlPreview || '',
     name: obj.nameRu || obj.nameEn || obj.nameOriginal || '',
     favorite: false,
+  }
+}
+
+export function kinopoiskImageConverter(item: any): MovieImage {
+  return {
+    imageUrl: item?.imageUrl,
+    previewUrl: item?.imageUrlPreview,
   }
 }

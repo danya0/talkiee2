@@ -1,5 +1,8 @@
-import type { Movie } from '~/types/movie'
-import { kinopoiskApiToMovieConverter } from '~/converters/kinopoiskApiToMovieConverter'
+import type { Movie, MovieImage } from '~/types/movie'
+import {
+  kinopoiskApiConverter,
+  kinopoiskImageConverter,
+} from '~/converters/kinopoiskApiConverter'
 
 export class KinopoiskApi {
   private xKey = 'c20595a1-3d8c-4cbd-92eb-fd7b0fa75c67'
@@ -46,6 +49,18 @@ export class KinopoiskApi {
       page,
     })
     console.log('collection -> ', collection)
-    return collection.items.map(kinopoiskApiToMovieConverter)
+    return collection.items.map(kinopoiskApiConverter)
+  }
+
+  async getMovieImages(movieId: number): Promise<MovieImage> {
+    const images = await this.fetch(
+      `/api/v2.2/films/${movieId}/images?`,
+      'GET',
+      {
+        type: 'STILL',
+        page: '1',
+      },
+    )
+    return images.items.map(kinopoiskImageConverter)
   }
 }

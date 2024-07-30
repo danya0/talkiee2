@@ -15,3 +15,8 @@ export type Movie = {
   posterUrlPreview: string
   favorite: boolean
 }
+
+export type MovieImage = {
+  imageUrl: string
+  previewUrl: string
+}
