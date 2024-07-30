@@ -13,6 +13,7 @@ export function kinopoiskApiConverter(obj: any): Movie {
     posterUrlPreview: obj.posterUrlPreview || '',
     name: obj.nameRu || obj.nameEn || obj.nameOriginal || '',
     favorite: false,
+    description: obj.description,
   }
 }
 

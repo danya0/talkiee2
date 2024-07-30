@@ -1,8 +1,13 @@
 <template>
   <Container v-if="movie">
     <div class="w-full flex itmes-center justify-between mb-7">
-      <h1 class="text-3xl">{{ movie.name }}</h1>
-      <button class="bg-orange-500 px-2 rounded-lg">
+      <div>
+        <h1 class="text-3xl">{{ movie.name }}</h1>
+        <span class="text-white/70" v-for="(genre, idx) in genres">
+          {{ genre }}{{ idx === genres?.length - 1 ? '' : ', ' }}
+        </span>
+      </div>
+      <button v-if="false" class="bg-orange-500 px-2 rounded-lg">
         Добавить в избранное
       </button>
     </div>
@@ -34,7 +39,13 @@
       </div>
     </div>
     <section class="mt-16">
-      <h1 class="text-3xl mb-4">Галерея</h1>
+      <h3 class="text-3xl mb-4">Описание</h3>
+      <div class="">
+        {{ movie.description }}
+      </div>
+    </section>
+    <section class="mt-16">
+      <h3 class="text-3xl mb-4">Галерея</h3>
       <div class="relative group">
         <div
           class="blur-lg transition-all group-hover:blur-0 flex gap-x-4 overflow-x-auto h-[250px]"
@@ -69,6 +80,7 @@ const kp = new KinopoiskApi()
 const movie = ref<Movie | null>(null)
 const facts = ref<MovieFact[] | null>(null)
 const images = ref<MovieImage[]>([])
+const genres = computed(() => movie.value?.genres.map((item) => item.genre))
 
 const noSpoiler = ref<boolean>(true)
 

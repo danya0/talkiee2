@@ -20,6 +20,7 @@ onMounted(() => {
 
 const searchText = ref('')
 const movieList = computed(() => store.finalMovieList)
+const firstMovie = computed(() => movieList.value[0])
 
 const search = () => {
   router.push({

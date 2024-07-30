@@ -4,7 +4,3 @@
     <div class="border-2 border-[#50688c] rounded-md px-2 py-1">v2.0</div>
   </router-link>
 </template>
-
-<script lang="ts" setup>
-const props = defineProps<{ center?: boolean }>()
-</script>

@@ -1,8 +1,6 @@
 <template>
   <Container>
-    <header class="flex flex-col">
-      <Logo center class="mb-5" />
-    </header>
+    <Logo center class="mb-5" />
   </Container>
 </template>
 <script setup lang="ts"></script>
