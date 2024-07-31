@@ -44,7 +44,7 @@
         {{ movie.description }}
       </div>
     </section>
-    <section class="mt-16">
+    <section v-if="images.length" class="mt-16">
       <h3 class="text-3xl mb-4">Галерея</h3>
       <div class="relative group">
         <div
@@ -117,11 +117,8 @@ onMounted(async () => {
 
 const toggleFavorite = () => {
   if (movie.value) {
-    console.log('movie.value.favorite before -> ', movie.value.favorite)
     store.favoriteToggle(movie.value)
-    console.log('movie.value.favorite -> ', movie.value.favorite)
     movie.value.favorite = !movie.value.favorite
-    console.log('movie.value.favorite after -> ', movie.value.favorite)
   }
 }
 </script>
