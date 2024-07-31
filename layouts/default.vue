@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-5 pb-8">
-    <MyHeader class="mb-8" />
+  <div class="pb-8 z-30">
+    <MyHeader class="mb-8 z-40 fixed left-1/2 -translate-x-1/2" />
     <Navbar />
     <slot />
   </div>

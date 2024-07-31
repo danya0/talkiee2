@@ -53,7 +53,7 @@ export class KinopoiskApi {
 
   async getCollections(
     page: string,
-    collectionName: string = 'TOP_250_MOVIES',
+    collectionName: string = 'TOP_POPULAR_ALL',
   ): Promise<Movie[]> {
     const collection = await this.fetch('/api/v2.2/films/collections?', 'GET', {
       type: collectionName,
