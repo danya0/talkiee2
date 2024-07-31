@@ -1,16 +1,19 @@
 <template>
   <div class="cursor-pointer grid group gap-y-1 max-w-[230px]">
     <div class="relative rounded-md overflow-hidden h-[340px]">
-      <MovieBookmark
-        :status="item.favorite"
-        @click.stop="favoriteToggle"
-        class="absolute top-0 right-0 z-10"
-      />
-      <MovieRating
-        v-if="item.rating"
-        class="absolute left-2 top-2 z-10"
-        :rating="item.rating"
-      />
+      <div class="absolute top-0 left-0 w-full z-10 flex justify-between">
+        <div class="flex items-center mt-2 ml-2 gap-x-2">
+          <MovieRating v-if="item.rating" :rating="item.rating" />
+          <div class="p-1 rounded-md bg-[#4a6fb5] text-[0.8rem]">
+            {{ item.year }}
+          </div>
+        </div>
+        <MovieBookmark
+          class="self-end"
+          :status="item.favorite"
+          @click.stop="favoriteToggle"
+        />
+      </div>
       <img
         class="w-full h-full transition-transform group-hover:scale-105 object-fill"
         :src="item.posterUrlPreview"
