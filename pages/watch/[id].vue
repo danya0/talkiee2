@@ -1,10 +1,10 @@
 <template>
-  <Container v-if="movie">
+  <Container v-if="movie && genres">
     <div class="w-full flex itmes-center justify-between mb-7">
       <div>
         <h1 class="text-3xl">{{ movie.name }}</h1>
         <span class="text-white/70" v-for="(genre, idx) in genres">
-          {{ genre }}{{ idx === genres?.length - 1 ? '' : ', ' }}
+          {{ genre }}{{ idx === genres.length - 1 ? '' : ', ' }}
         </span>
       </div>
       <button v-if="false" class="bg-orange-500 px-2 rounded-lg">
