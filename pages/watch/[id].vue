@@ -1,15 +1,13 @@
 <template>
   <Container v-if="movie && genres">
-    <div class="w-full flex itmes-center justify-between mb-7">
+    <div class="w-full flex items-center justify-between mb-7">
       <div>
         <h1 class="text-3xl">{{ movie.name }}</h1>
         <span class="text-white/70" v-for="(genre, idx) in genres">
           {{ genre }}{{ idx === genres.length - 1 ? '' : ', ' }}
         </span>
       </div>
-      <button v-if="false" class="bg-orange-500 px-2 rounded-lg">
-        Добавить в избранное
-      </button>
+      <MovieFavoriteButton :favorite="movie.favorite" @click="toggleFavorite" />
     </div>
     <div class="flex gap-x-12 max-h-[600px]">
       <div
@@ -73,8 +71,12 @@
 <script lang="ts" setup>
 import { KinopoiskApi } from '~/library/kinopoiskApi'
 import type { Movie, MovieFact, MovieImage } from '~/types/movie'
+import MovieFavoriteButton from '~/components/movie/movieFavoriteButton.vue'
+import { useMainStore } from '~/store/mainPageStore'
 
 const route = useRoute()
+const store = useMainStore()
+
 const movieId = computed(() =>
   Array.isArray(route.params.id) ? route.params.id[0] : route.params.id,
 )
@@ -88,7 +90,11 @@ const noSpoiler = ref<boolean>(true)
 
 onMounted(async () => {
   // todo: обрабатывать момент, когда в id передаем рандом значение
+  // подгрузка файлов
   movie.value = await kp.getById(movieId.value)
+  movie.value.favorite = store.checkFavorite(movie.value.kinopoiskId)
+
+  // подгурзка фактов
   facts.value = await kp.getFacts(movieId.value).then((facts) =>
     facts.map((fact) => {
       const replacedText = fact.text.replace(/(<([^>]+)>)/gi, '')
@@ -98,11 +104,24 @@ onMounted(async () => {
       }
     }),
   )
+
+  // подгурзка изображений
   images.value = await kp.getMovieImages(+movieId.value)
 
+  // вставляем скрипт для просмотра фильма
   const plugin = document.createElement('script')
   plugin.setAttribute('src', '/kinobox.min.js')
   plugin.async = true
   document.head.appendChild(plugin)
 })
+
+const toggleFavorite = () => {
+  if (movie.value) {
+    console.log('movie.value.favorite before -> ', movie.value.favorite)
+    store.favoriteToggle(movie.value)
+    console.log('movie.value.favorite -> ', movie.value.favorite)
+    movie.value.favorite = !movie.value.favorite
+    console.log('movie.value.favorite after -> ', movie.value.favorite)
+  }
+}
 </script>

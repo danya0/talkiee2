@@ -34,16 +34,18 @@ export const useMainStore = defineStore('main', {
       })
     },
     favoriteToggle(movie: Movie) {
-      console.log('movie -> ', movie)
       if (movie.favorite) {
         this.$state.favoriteList = this.$state.favoriteList.filter(
           (item) => item.kinopoiskId !== movie.kinopoiskId,
         )
       } else {
-        movie.favorite = true
-        this.$state.favoriteList.push(movie)
+        this.$state.favoriteList.push({ ...movie, favorite: true })
       }
       LsParser.set('favoriteList', this.$state.favoriteList)
+    },
+    checkFavorite(movieId: number): boolean {
+      const ids = this.favoriteList.map((item) => item.kinopoiskId)
+      return ids.includes(movieId)
     },
   },
 })
