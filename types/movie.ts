@@ -26,3 +26,9 @@ export type MovieFact = {
   type: string
   spoiler: boolean
 }
+
+export enum MovieCollections {
+  POPULAR_SERIES = 'POPULAR_SERIES',
+  TOP_POPULAR_MOVIES = 'TOP_POPULAR_MOVIES',
+  TOP_POPULAR_ALL = 'TOP_POPULAR_ALL',
+}

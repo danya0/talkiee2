@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { KinopoiskApi } from '~/library/kinopoiskApi'
-import type { Movie } from '~/types/movie'
+import { type Movie, MovieCollections } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
 
 const kp = new KinopoiskApi()
@@ -28,8 +28,8 @@ export const useMainStore = defineStore('main', {
         this.$state.searchList = res
       })
     },
-    loadFilms(page: string) {
-      kp.getCollections(page).then((res) => {
+    loadFilms(page: string, collectionType?: MovieCollections) {
+      kp.getCollections(page, collectionType).then((res) => {
         this.$state.movieList = res
       })
     },

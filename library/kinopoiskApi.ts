@@ -1,4 +1,9 @@
-import type { Movie, MovieFact, MovieImage } from '~/types/movie'
+import {
+  type Movie,
+  MovieCollections,
+  type MovieFact,
+  type MovieImage,
+} from '~/types/movie'
 import {
   kinopoiskApiConverter,
   kinopoiskFactConverter,
@@ -53,7 +58,7 @@ export class KinopoiskApi {
 
   async getCollections(
     page: string,
-    collectionName: string = 'TOP_POPULAR_ALL',
+    collectionName: MovieCollections = MovieCollections.TOP_POPULAR_ALL,
   ): Promise<Movie[]> {
     const collection = await this.fetch('/api/v2.2/films/collections?', 'GET', {
       type: collectionName,
