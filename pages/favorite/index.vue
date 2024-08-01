@@ -1,5 +1,5 @@
 <template>
-  <Container>
+  <Container class="pt-24">
     <MovieGrid :movie-list="favoriteList" />
   </Container>
 </template>

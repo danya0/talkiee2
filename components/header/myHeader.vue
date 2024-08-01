@@ -1,6 +1,8 @@
 <template>
-  <Container>
-    <Logo center class="mb-5" />
-  </Container>
+  <div class="w-full">
+    <Container class="flex">
+      <Logo class="self-start justify-self-start" center />
+    </Container>
+  </div>
 </template>
 <script setup lang="ts"></script>
