@@ -7,9 +7,17 @@
     />
     <Container>
       <section class="flex flex-col items-center gap-y-5">
-        <SearchBox class="w-1/2" v-model="searchText" @search="search" />
+        <SearchBox
+          class="w-full sm:w-1/2"
+          v-model="searchText"
+          @search="search"
+        />
         <MovieSelector v-model="selectorType" />
-        <MovieGrid :title="selectorTypeText" :movie-list="movieList" />
+        <MovieGrid
+          class="self-stretch"
+          :title="selectorTypeText"
+          :movie-list="movieList"
+        />
       </section>
     </Container>
   </div>

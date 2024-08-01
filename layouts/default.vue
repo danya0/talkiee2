@@ -3,14 +3,17 @@
     <MyHeader
       ref="headerEl"
       class="transition-colors z-50 fixed left-1/2 -translate-x-1/2 flex justify-start py-2"
-    />
-    <Navbar />
+    >
+      <TopNavbar class="flex sm:hidden max-w-[200px]" />
+    </MyHeader>
+    <Navbar class="hidden sm:block" />
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
 import MyHeader from '~/components/header/myHeader.vue'
+import TopNavbar from '~/components/navbar/topNavbar.vue'
 
 const headerEl = ref()
 

@@ -1,10 +1,14 @@
 <template>
   <Container class="pt-24 flex flex-col items-center">
-    <SearchBox class="w-1/2 mb-6" v-model="searchText" @search="search" />
+    <SearchBox
+      class="w-full sm:w-1/2 mb-6"
+      v-model="searchText"
+      @search="search"
+    />
     <div v-if="query && notFind" class="text-6xl text-center">
       По вашему запросу ничего не найдено 😢
     </div>
-    <MovieGrid v-else :movie-list="searchList" />
+    <MovieGrid class="self-stretch" v-else :movie-list="searchList" />
   </Container>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <p v-if="title" class="text-xl mb-8">{{ title }}</p>
-    <div class="w-full grid grid-cols-4 gap-y-4 gap-x-8">
+    <div class="w-full gap-4 gap-x-a grid this-grid">
       <MovieCard
         v-for="item in props.movieList"
         :key="item.kinopoiskId"
@@ -30,3 +30,9 @@ const goToMoviePage = (movieId: number) => {
   router.push(`/watch/${movieId}`)
 }
 </script>
+
+<style>
+.this-grid {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)) !important;
+}
+</style>

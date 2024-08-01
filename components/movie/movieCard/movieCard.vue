@@ -1,5 +1,7 @@
 <template>
-  <div class="cursor-pointer grid group gap-y-1 max-w-[230px]">
+  <div
+    class="cursor-pointer grid group gap-y-1 max-w-[230px] self-start justify-self-center"
+  >
     <div class="relative rounded-md overflow-hidden h-[340px]">
       <div class="absolute top-0 left-0 w-full z-10 flex justify-between">
         <div class="flex items-center mt-2 ml-2 gap-x-2">
