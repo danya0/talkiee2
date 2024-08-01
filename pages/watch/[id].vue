@@ -59,7 +59,7 @@
           />
         </div>
         <div
-          class="opacity-100 group-hover:opacity-0 transition-opacity absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl"
+          class="opacity-100 group-hover:hidden transition-opacity absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-4xl"
         >
           Может содержать спойлеры
         </div>
