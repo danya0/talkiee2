@@ -1,5 +1,5 @@
 <template>
-  <Container v-if="movie && genres">
+  <Container class="pt-24" v-if="movie && genres">
     <div class="w-full flex items-center justify-between mb-7">
       <div>
         <h1 class="text-3xl">{{ movie.name }}</h1>
