@@ -27,7 +27,6 @@ const favoriteToggle = (movie: Movie) => {
 }
 
 const goToMoviePage = (movieId: number) => {
-  console.log('fsdk')
   router.push(`/watch/${movieId}`)
 }
 </script>

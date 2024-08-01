@@ -10,11 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{ rating: number }>()
+const props = defineProps<{ rating: number | string }>()
 const borderColor = computed(() => {
-  if (props.rating > 8) {
+  const rating = +props.rating
+  if (rating > 8) {
     return 'border-green-500'
-  } else if (props.rating > 5) {
+  } else if (rating > 5) {
     return 'border-orange-500'
   } else {
     return 'border-red-500'

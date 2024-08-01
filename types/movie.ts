@@ -7,7 +7,7 @@ export type Movie = {
   genres: {
     genre: string
   }[]
-  rating?: number
+  rating?: number | string
   year: string
   type: string
   posterUrl: string

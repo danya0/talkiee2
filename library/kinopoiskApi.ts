@@ -59,7 +59,6 @@ export class KinopoiskApi {
       type: collectionName,
       page,
     })
-    console.log('collection -> ', collection)
     return collection.items.map(kinopoiskApiConverter)
   }
 
