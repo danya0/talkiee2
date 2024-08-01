@@ -16,7 +16,7 @@ const headerEl = ref()
 
 onMounted(() => {
   window.addEventListener('scroll', (e) => {
-    const el = headerEl.value.$el
+    const el = headerEl.value?.$el
     if (!el) return
     if (window.scrollY > 30) {
       el.classList.add('bg-white')

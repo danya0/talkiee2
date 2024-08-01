@@ -4,7 +4,6 @@
       v-if="previewMoviePoster"
       :movie="previewMovie"
       :image="previewMoviePoster"
-      @watch-online="goToMovieFromPoster"
     />
     <Container>
       <section class="flex flex-col items-center gap-y-5">
@@ -84,10 +83,5 @@ const search = () => {
       s: searchText.value,
     },
   })
-}
-
-// todo: сделать это роутер линкой внутри компонента
-const goToMovieFromPoster = () => {
-  router.push(`/watch/${previewMovie.value.kinopoiskId}`)
 }
 </script>

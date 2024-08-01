@@ -22,12 +22,12 @@
           {{ props.movie.type }}
         </span>
       </p>
-      <button
+      <router-link
         class="px-3 py-2 rounded-md text-lg text-white border-2 border-[#4a6fb5]"
-        @click="watchOnline"
+        :to="`/watch/${props.movie.kinopoiskId}`"
       >
         Смотреть онлайн
-      </button>
+      </router-link>
     </Container>
   </div>
 </template>
