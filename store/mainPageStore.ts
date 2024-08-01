@@ -9,6 +9,7 @@ export const useMainStore = defineStore('main', {
   state: () => ({
     movieList: [] as Movie[],
     searchList: [] as Movie[],
+    loaded: false as boolean,
     favoriteList: (LsParser.get('favoriteList') || []) as Movie[],
   }),
   getters: {
@@ -24,13 +25,17 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     findByName(name: string) {
+      this.$state.loaded = true
       kp.getByKeyword(name, '1').then((res) => {
         this.$state.searchList = res
+        this.$state.loaded = false
       })
     },
     loadFilms(page: string, collectionType?: MovieCollections) {
+      this.$state.loaded = true
       kp.getCollections(page, collectionType).then((res) => {
         this.$state.movieList = res
+        this.$state.loaded = false
       })
     },
     favoriteToggle(movie: Movie) {

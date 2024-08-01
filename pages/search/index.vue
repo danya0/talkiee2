@@ -5,10 +5,15 @@
       v-model="searchText"
       @search="search"
     />
-    <div v-if="query && notFind" class="text-6xl text-center">
+    <MovieGrid
+      v-if="query && searchList.length"
+      class="self-stretch"
+      :movie-list="searchList"
+      :is-loaded="isLoaded"
+    />
+    <div v-else class="text-6xl text-center">
       По вашему запросу ничего не найдено 😢
     </div>
-    <MovieGrid class="self-stretch" v-else :movie-list="searchList" />
   </Container>
 </template>
 
@@ -25,6 +30,7 @@ const store = useMainStore()
 const searchList = computed(() => store.searchList)
 const query = computed(() => route.query.s)
 const notFind = computed<boolean>(() => searchList.value.length < 1)
+const isLoaded = computed(() => store.loaded)
 
 onMounted(() => {
   if (!query.value) return

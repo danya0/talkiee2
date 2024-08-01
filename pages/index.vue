@@ -14,6 +14,7 @@
         />
         <MovieSelector v-model="selectorType" />
         <MovieGrid
+          :is-loaded="isLoaded"
           class="self-stretch"
           :title="selectorTypeText"
           :movie-list="movieList"
@@ -29,7 +30,7 @@ import { useMainStore } from '~/store/mainPageStore'
 import { KinopoiskApi } from '~/library/kinopoiskApi'
 import MoviePreview from '~/components/movie/moviePreview.vue'
 import MovieSelector from '~/components/movie/movieSelector/movieSelector.vue'
-import { type Movie, MovieCollections } from '~/types/movie'
+import { MovieCollections } from '~/types/movie'
 import { usePreviewStore } from '~/store/previewStore'
 
 const router = useRouter()
@@ -39,6 +40,7 @@ const kp = new KinopoiskApi()
 
 const searchText = ref('')
 const movieList = computed(() => store.finalMovieList)
+const isLoaded = computed(() => store.loaded)
 
 const previewMovie = computed(() => previewStore.previewMovie)
 const previewMoviePoster = computed(() => previewStore.previewMoviePoster)
