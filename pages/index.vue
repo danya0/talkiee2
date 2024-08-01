@@ -1,16 +1,18 @@
 <template>
-  <MoviePreview
-    v-if="previewMoviePoster"
-    :movie="previewMovie"
-    :image="previewMoviePoster"
-    @watch-online="goToMovieFromPoster"
-  />
-  <Container>
-    <section class="flex flex-col items-center gap-y-5">
-      <SearchBox class="w-1/2" v-model="searchText" @search="search" />
-      <MovieGrid title="Популярные фильмы" :movie-list="movieList" />
-    </section>
-  </Container>
+  <div>
+    <MoviePreview
+      v-if="previewMoviePoster"
+      :movie="previewMovie"
+      :image="previewMoviePoster"
+      @watch-online="goToMovieFromPoster"
+    />
+    <Container>
+      <section class="flex flex-col items-center gap-y-5">
+        <SearchBox class="w-1/2" v-model="searchText" @search="search" />
+        <MovieGrid title="Популярные фильмы" :movie-list="movieList" />
+      </section>
+    </Container>
+  </div>
 </template>
 
 <script lang="ts" setup>
