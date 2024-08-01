@@ -9,13 +9,16 @@
       </div>
       <MovieFavoriteButton :favorite="movie.favorite" @click="toggleFavorite" />
     </div>
-    <div class="flex gap-x-12 max-h-[600px]">
+    <div class="flex flex-col lg:flex-row gap-y-5 gap-x-12 max-h-[600px]">
       <div
         data-kinobox="auto"
         :data-kinopoisk="movie.kinopoiskId"
-        class="h-auto w-[70%] mx-auto"
+        class="h-auto w-full lg:w-[70%] mx-auto"
       />
-      <div v-if="facts?.length" class="w-[30%] flex flex-col overflow-y-hidden">
+      <div
+        v-if="facts?.length"
+        class="w-full lg:w-[30%] flex flex-col overflow-y-hidden"
+      >
         <div class="flex items-center justify-between mb-4">
           <p>Факты:</p>
           <label>
