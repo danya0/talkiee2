@@ -1,7 +1,7 @@
 import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 
 export function kinopoiskApiConverter(obj: any): Movie {
-  let rating = obj.ratingKinopoisk || obj.ratingImbd || obj.rating || 0
+  let rating = obj.ratingKinopoisk || obj.ratingImdb || obj.rating || 0
   if (rating === 'null') rating = undefined
   return {
     kinopoiskId: obj.kinopoiskId || obj.filmId,
