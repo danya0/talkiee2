@@ -23,7 +23,7 @@
         </span>
       </p>
       <router-link
-        class="px-3 py-2 rounded-md text-lg text-white border-2 border-[#4a6fb5]"
+        class="px-3 py-2 rounded-md text-lg text-white border-2 border-[#4a6fb5] transition-colors hover:bg-[#4a6fb5]"
         :to="`/watch/${props.movie.kinopoiskId}`"
       >
         Смотреть онлайн

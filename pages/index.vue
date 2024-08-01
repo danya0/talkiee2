@@ -1,7 +1,7 @@
 <template>
   <div>
     <MoviePreview
-      v-if="previewMoviePoster"
+      v-if="previewMovie && previewMoviePoster"
       :movie="previewMovie"
       :image="previewMoviePoster"
     />
@@ -21,16 +21,19 @@ import { useMainStore } from '~/store/mainPageStore'
 import { KinopoiskApi } from '~/library/kinopoiskApi'
 import MoviePreview from '~/components/movie/moviePreview.vue'
 import MovieSelector from '~/components/movie/movieSelector/movieSelector.vue'
-import { MovieCollections } from '~/types/movie'
+import { type Movie, MovieCollections } from '~/types/movie'
+import { usePreviewStore } from '~/store/previewStore'
 
 const router = useRouter()
 const store = useMainStore()
+const previewStore = usePreviewStore()
 const kp = new KinopoiskApi()
 
 const searchText = ref('')
 const movieList = computed(() => store.finalMovieList)
-const previewMovie = computed(() => movieList.value[5])
-const previewMoviePoster = ref<string>()
+
+const previewMovie = computed(() => previewStore.previewMovie)
+const previewMoviePoster = computed(() => previewStore.previewMoviePoster)
 
 const selectorType = ref<'all' | 'movie' | 'series'>('all')
 const selectorTypeText = computed(() => {
@@ -43,15 +46,30 @@ const selectorTypeText = computed(() => {
   }
 })
 
+const updatePreviewMovie = async () => {
+  const randomMovie = movieList.value[Randomizer.random(1, 20)]
+
+  if (!randomMovie) return
+  const posters = await kp.getMovieImages(randomMovie.kinopoiskId)
+  if (posters.length < 1) {
+    await updatePreviewMovie()
+    return
+  }
+  previewStore.setPreviewMovie(randomMovie, posters[0].imageUrl)
+}
+
+// переменная, для того, чтобы код внутри watch выполнился единажды при
+const already = ref<boolean>(false)
 watch(
   async () => {
-    // будет дергаться на пагинации
-    if (movieList.value.length) {
-      const posters = await kp.getMovieImages(previewMovie.value.kinopoiskId)
-      if (posters.length) {
-        // логика по смене previewMovie
-      }
-      previewMoviePoster.value = posters[0].imageUrl
+    // проверяем прошел ли день, чтоб обновить превью
+    const previewLastDate = LsParser.get('lastUpdatePreview') || null
+    const passedOneDay = previewLastDate
+      ? DateParser.getDifferenceDays(new Date(), previewLastDate)
+      : true
+    if (!already.value && movieList.value.length && passedOneDay) {
+      already.value = true
+      await updatePreviewMovie()
     }
   },
   () => movieList.value,

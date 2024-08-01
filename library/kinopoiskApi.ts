@@ -76,6 +76,9 @@ export class KinopoiskApi {
         page: '1',
       },
     )
-    return images.items.map(kinopoiskImageConverter)
+    if (images.items.length) {
+      return images.items.map(kinopoiskImageConverter)
+    }
+    return []
   }
 }
