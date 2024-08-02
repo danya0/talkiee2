@@ -1,0 +1,1 @@
+import{_ as e}from"./DlAUqK2U.js";import{v as t,x as n,Y as r}from"./BrCeWUXW.js";const s={},c={class:"container mx-auto px-12"};function _(o,a){return t(),n("div",c,[r(o.$slots,"default")])}const i=e(s,[["render",_]]);export{i as _};
