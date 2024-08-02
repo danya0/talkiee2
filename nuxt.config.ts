@@ -12,6 +12,9 @@ export default defineNuxtConfig({
   },
   ssr: false,
   app: {
+    head: {
+      title: 'Talkiee – онлайн кинотеатр',
+    },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 })
