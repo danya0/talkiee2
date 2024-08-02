@@ -44,6 +44,8 @@ const filmType = computed(() => {
     return 'Фильм'
   } else if (props.movie.type === 'TV_SERIES') {
     return 'Сериал'
+  } else if (props.movie.type === 'MINI_SERIES') {
+    return 'Мини-сериал'
   }
   return 'Фильм или сериал'
 })

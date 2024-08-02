@@ -93,10 +93,13 @@ const countries = computed(() =>
   movie.value?.countries.map((item) => item.country),
 )
 const filmType = computed(() => {
+  console.log('movie.value?.type -> ', movie.value?.type)
   if (movie.value?.type === 'FILM') {
     return 'Фильм'
   } else if (movie.value?.type === 'TV_SERIES') {
     return 'Сериал'
+  } else if (movie.value?.type === 'MINI_SERIES') {
+    return 'Мини-сериал'
   }
   return 'Фильм или сериал'
 })
