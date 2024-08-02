@@ -17,7 +17,7 @@
       />
       <div
         v-if="facts?.length"
-        class="w-full lg:w-[30%] flex flex-col overflow-y-hidden"
+        class="w-full lg:w-[30%] h-[250px] flex flex-col overflow-y-hidden"
       >
         <div class="flex items-center justify-between mb-4">
           <p>Факты:</p>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <section class="mt-16">
+    <section class="mt-6 sm:mt-16">
       <h3 class="text-3xl mb-4">Описание</h3>
       <div class="">
         {{ movie.description }}
@@ -113,7 +113,7 @@ onMounted(async () => {
 
   // вставляем скрипт для просмотра фильма
   const plugin = document.createElement('script')
-  plugin.setAttribute('src', '/kinobox.min.js')
+  plugin.setAttribute('src', '/talkiee2/kinobox.min.js')
   plugin.async = true
   document.head.appendChild(plugin)
 })

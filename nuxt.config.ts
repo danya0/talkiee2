@@ -12,8 +12,11 @@ export default defineNuxtConfig({
   },
   ssr: false,
   app: {
+    baseURL: '/talkiee2/',
+    buildAssetsDir: 'assets',
     head: {
       title: 'Talkiee – онлайн кинотеатр',
+      link: [{ rel: 'icon', type: 'image/png', href: '/talkiee2/favicon.png' }],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
   },

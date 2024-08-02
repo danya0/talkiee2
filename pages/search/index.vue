@@ -6,13 +6,15 @@
       @search="search"
     />
     <MovieGrid
-      v-if="searchList.length"
       class="self-stretch"
       :movie-list="searchList"
       :is-loaded="isLoaded"
       @pagination="nextPage"
     />
-    <div v-else-if="query" class="text-6xl text-center">
+    <div
+      v-if="!searchList.length && !isLoaded"
+      class="text-3xl sm:text-6xl text-center"
+    >
       По вашему запросу ничего не найдено 😢
     </div>
   </Container>

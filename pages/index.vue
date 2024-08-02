@@ -98,7 +98,7 @@ watch(
 watch(
   () => [selectorType.value, page.value],
   (prevV, newV) => {
-    if (newV && newV[0] !== prevV[0]) {
+    if (newV && newV[0] !== prevV[0] && page.value > 1) {
       resetPage.value = true
       page.value = 1
     }
