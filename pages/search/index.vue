@@ -12,8 +12,8 @@
       @pagination="nextPage"
     />
     <div
-      v-if="!searchList.length && !isLoaded"
-      class="text-3xl sm:text-6xl text-center"
+      v-if="!searchList.length && !isLoaded && alreadySearched"
+      class="text-3xl xl:text-4xl text-center"
     >
       По вашему запросу ничего не найдено 😢
     </div>
@@ -34,12 +34,13 @@ const store = useMainStore()
 const searchList = computed(() => store.finalSearchList)
 const query = computed(() => route.query.s)
 const isLoaded = computed(() => store.loaded)
+const alreadySearched = ref<boolean>(false)
 
 const page = ref(1)
 const pageUpdate = ref<boolean>(false)
 const totalPages = computed(() => store.searchListTotalPages)
 
-onMounted(() => {
+onActivated(() => {
   if (!query.value) return
   searchText.value = `${query.value}`
   search()
@@ -50,6 +51,7 @@ const search = () => {
     pageUpdate.value = true
   }
   store.findByName(searchText.value, page.value)
+  alreadySearched.value = true
   router.push({
     query: {
       ...route.query,
@@ -60,7 +62,6 @@ const search = () => {
 watch(
   () => page.value,
   () => {
-    console.log('pageUpdate.value -> ', pageUpdate.value)
     if (pageUpdate.value) {
       pageUpdate.value = false
       return

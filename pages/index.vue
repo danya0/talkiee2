@@ -124,4 +124,8 @@ const nextPage = () => {
   if (totalPages.value === page.value) return
   page.value++
 }
+
+onDeactivated(() => {
+  searchText.value = ''
+})
 </script>
