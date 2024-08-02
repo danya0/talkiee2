@@ -1,6 +1,6 @@
 <template>
   <nav class="fixed left-0 top-1/2 -translate-y-1/2 z-40">
-    <ul class="flex flex-col gap-y-7 pl-10">
+    <ul class="flex flex-col gap-y-7 pl-8">
       <li>
         <router-link activeClass="active" class="relative" to="/">
           <svg

@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-8 z-30">
+  <div class="pb-8 sm:pl-8 z-30">
     <MyHeader
       ref="headerEl"
       class="transition-colors z-50 fixed left-1/2 -translate-x-1/2 flex justify-start py-2"
@@ -18,7 +18,7 @@ import TopNavbar from '~/components/navbar/topNavbar.vue'
 const headerEl = ref()
 
 onMounted(() => {
-  window.addEventListener('scroll', (e) => {
+  window.addEventListener('scroll', () => {
     const el = headerEl.value?.$el
     if (!el) return
     if (window.scrollY > 30) {
