@@ -24,6 +24,15 @@ export const useMainStore = defineStore('main', {
         return { ...movie, favorite: false }
       })
     },
+    finalSearchList(state) {
+      const favoriteIds = state.favoriteList.map((movie) => movie.kinopoiskId)
+      return state.searchList.map((movie) => {
+        if (favoriteIds.includes(movie.kinopoiskId)) {
+          return { ...movie, favorite: true }
+        }
+        return { ...movie, favorite: false }
+      })
+    },
   },
   actions: {
     findByName(name: string, page: number) {

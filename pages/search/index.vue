@@ -28,7 +28,7 @@ const searchText = ref('')
 
 const store = useMainStore()
 
-const searchList = computed(() => store.searchList)
+const searchList = computed(() => store.finalSearchList)
 const query = computed(() => route.query.s)
 const isLoaded = computed(() => store.loaded)
 
