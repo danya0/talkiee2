@@ -21,6 +21,7 @@
 </template>
 
 <script lang="ts" setup>
+// todo: выводить список "Недавно искали", хранить в локал сторе. С возможностью очистки
 import { useMainStore } from '~/store/mainPageStore'
 import MovieGrid from '~/components/movie/movieGrid/movieGrid.vue'
 

@@ -21,7 +21,7 @@
         <span v-if="props.movie.rating"> {{ props.movie.rating }} | </span>
         <span v-if="props.movie.year"> {{ props.movie.year }} | </span>
         <span v-if="props.movie.type">
-          {{ props.movie.type }}
+          {{ filmType }}
         </span>
       </p>
       <router-link
@@ -38,6 +38,15 @@
 import type { Movie } from '~/types/movie'
 
 const props = defineProps<{ image: string; movie: Movie }>()
+
+const filmType = computed(() => {
+  if (props.movie.type === 'FILM') {
+    return 'Фильм'
+  } else if (props.movie.type === 'TV_SERIES') {
+    return 'Сериал'
+  }
+  return 'Фильм или сериал'
+})
 
 const posterHtmlEl = ref<HTMLDivElement>()
 watch(

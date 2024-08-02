@@ -1,7 +1,7 @@
 <template>
-  <Container class="pt-24" v-if="movie && genres">
+  <Container class="pt-24" v-if="movie">
     <div class="w-full flex items-center justify-between mb-7">
-      <div>
+      <div v-if="genres">
         <h1 class="text-3xl">{{ movie.name }}</h1>
         <span class="text-white/70" v-for="(genre, idx) in genres">
           {{ genre }}{{ idx === genres.length - 1 ? '' : ', ' }}
@@ -15,40 +15,36 @@
         :data-kinopoisk="movie.kinopoiskId"
         class="h-auto w-full lg:w-[70%] mx-auto"
       />
-      <div
-        v-if="facts?.length"
-        class="w-full lg:w-[30%] h-[250px] flex flex-col overflow-y-hidden"
-      >
-        <div class="flex items-center justify-between mb-4">
-          <p>Факты:</p>
-          <label>
-            <input v-model="noSpoiler" type="checkbox" />
-            Без спойлеров
-          </label>
-        </div>
-        <div class="overflow-y-auto">
-          <ol class="list-decimal ml-7">
-            <li
-              :class="[
-                'tracking-normal leading-relaxed my-2',
-                fact.spoiler && noSpoiler ? 'blur-sm' : '',
-              ]"
-              v-for="fact in facts"
-            >
-              {{ fact.text }}
-            </li>
-          </ol>
-        </div>
-      </div>
     </div>
-    <section class="mt-6 sm:mt-16">
-      <h3 class="text-3xl mb-4">Описание</h3>
-      <div class="">
-        {{ movie.description }}
+    <MovieSection class="" title="Информация">
+      <div>
+        <p class="text-lg font-bold">Тип:</p>
+        <div>
+          {{ filmType }}
+        </div>
       </div>
-    </section>
-    <section v-if="images.length" class="mt-16">
-      <h3 class="text-3xl mb-4">Галерея</h3>
+      <div v-if="countries">
+        <p class="text-lg font-bold">Страна производства:</p>
+        <div>
+          <span v-for="(country, idx) in countries">
+            {{ country }}{{ idx === countries.length - 1 ? '' : ', ' }}
+          </span>
+        </div>
+      </div>
+      <div>
+        <p class="text-lg font-bold">Год выпуска:</p>
+        <div>
+          {{ movie.year }}
+        </div>
+      </div>
+      <div>
+        <p class="text-lg font-bold">Описание:</p>
+        <div>
+          {{ movie.description }}
+        </div>
+      </div>
+    </MovieSection>
+    <MovieSection title="Галерея" v-if="images.length" class="mt-16">
       <div class="relative group">
         <div
           class="blur-lg transition-all group-hover:blur-0 flex gap-x-4 overflow-x-auto h-[250px]"
@@ -67,7 +63,10 @@
           Может содержать спойлеры
         </div>
       </div>
-    </section>
+    </MovieSection>
+    <MovieSection v-if="facts && facts.length" title="Факты">
+      <FactsBlock :facts="facts" />
+    </MovieSection>
   </Container>
 </template>
 
@@ -76,6 +75,8 @@ import { KinopoiskApi } from '~/library/kinopoiskApi'
 import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 import MovieFavoriteButton from '~/components/movie/movieFavoriteButton.vue'
 import { useMainStore } from '~/store/mainPageStore'
+import FactsBlock from '~/components/moviePage/factsBlock.vue'
+import MovieSection from '~/components/moviePage/movieSection.vue'
 
 const route = useRoute()
 const store = useMainStore()
@@ -88,8 +89,17 @@ const movie = ref<Movie | null>(null)
 const facts = ref<MovieFact[] | null>(null)
 const images = ref<MovieImage[]>([])
 const genres = computed(() => movie.value?.genres.map((item) => item.genre))
-
-const noSpoiler = ref<boolean>(true)
+const countries = computed(() =>
+  movie.value?.countries.map((item) => item.country),
+)
+const filmType = computed(() => {
+  if (movie.value?.type === 'FILM') {
+    return 'Фильм'
+  } else if (movie.value?.type === 'TV_SERIES') {
+    return 'Сериал'
+  }
+  return 'Фильм или сериал'
+})
 
 onMounted(async () => {
   // todo: обрабатывать момент, когда в id передаем рандом значение
