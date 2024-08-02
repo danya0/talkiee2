@@ -8,7 +8,9 @@ const kp = new KinopoiskApi()
 export const useMainStore = defineStore('main', {
   state: () => ({
     movieList: [] as Movie[],
+    totalPages: 0 as number,
     searchList: [] as Movie[],
+    searchListTotalPages: 0 as number,
     loaded: false as boolean,
     favoriteList: (LsParser.get('favoriteList') || []) as Movie[],
   }),
@@ -24,18 +26,37 @@ export const useMainStore = defineStore('main', {
     },
   },
   actions: {
-    findByName(name: string) {
-      this.$state.loaded = true
-      kp.getByKeyword(name, '1').then((res) => {
-        this.$state.searchList = res
-        this.$state.loaded = false
+    findByName(name: string, page: number) {
+      if (page === 1) this.$state.loaded = true
+      kp.getByKeyword(name, page).then((res) => {
+        if (page === 1) {
+          this.$state.loaded = false
+          this.$state.searchList = res.items
+          this.$state.searchListTotalPages = Math.ceil(
+            res.searchFilmsCountResult / page,
+          )
+        } else {
+          this.$state.searchList = [...this.$state.searchList, ...res.items]
+        }
       })
     },
-    loadFilms(page: string, collectionType?: MovieCollections) {
-      this.$state.loaded = true
+    loadFilms(collectionType: MovieCollections, page: number) {
+      if (page === this.$state.totalPages) return
+
+      const pageOne = page === 1
+      if (pageOne) this.$state.loaded = true
+
       kp.getCollections(page, collectionType).then((res) => {
-        this.$state.movieList = res
-        this.$state.loaded = false
+        if (pageOne) {
+          this.$state.movieList = res.items
+          this.$state.totalPages = res.totalPages
+          this.$state.loaded = false
+        } else {
+          this.$state.movieList = unique([
+            ...this.$state.movieList,
+            ...res.items,
+          ])
+        }
       })
     },
     favoriteToggle(movie: Movie) {

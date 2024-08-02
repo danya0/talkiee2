@@ -43,28 +43,38 @@ export class KinopoiskApi {
     return facts.items.map((fact: any) => kinopoiskFactConverter(fact))
   }
 
-  async getByKeyword(word: string, page: string): Promise<Movie[]> {
+  async getByKeyword(
+    word: string,
+    page: number,
+  ): Promise<{ searchFilmsCountResult: number; items: Movie[] }> {
     const films = await this.fetch(
       '/api/v2.1/films/search-by-keyword?',
       'GET',
       {
         keyword: word,
-        page: page,
+        page: `${page}`,
       },
     )
-    // todo: внутри films лежит pagesCount для пагинации
-    return films.films.map(kinopoiskApiConverter)
+
+    return {
+      searchFilmsCountResult: films.searchFilmsCountResult,
+      items: films.films.map(kinopoiskApiConverter),
+    }
   }
 
   async getCollections(
-    page: string,
+    page: number,
     collectionName: MovieCollections = MovieCollections.TOP_POPULAR_ALL,
-  ): Promise<Movie[]> {
+  ): Promise<{ items: Movie[]; totalPages: number }> {
     const collection = await this.fetch('/api/v2.2/films/collections?', 'GET', {
       type: collectionName,
-      page,
+      page: `${page}`,
     })
-    return collection.items.map(kinopoiskApiConverter)
+    console.log('collection -> ', collection)
+    return {
+      items: collection.items.map(kinopoiskApiConverter),
+      totalPages: collection.totalPages,
+    }
   }
 
   async getMovieImages(movieId: number): Promise<MovieImage[]> {

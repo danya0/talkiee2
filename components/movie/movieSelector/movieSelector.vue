@@ -17,10 +17,12 @@
 </template>
 
 <script lang="ts" setup>
+import { MovieCollections } from '~/types/movie'
+
 const selectedTypes = ref([
-  { key: 'all', name: 'Все' },
-  { key: 'movie', name: 'Фильмы' },
-  { key: 'series', name: 'Сериалы' },
+  { key: MovieCollections.TOP_POPULAR_ALL, name: 'Все' },
+  { key: MovieCollections.TOP_POPULAR_MOVIES, name: 'Фильмы' },
+  { key: MovieCollections.POPULAR_SERIES, name: 'Сериалы' },
 ])
 const pick = defineModel()
 </script>

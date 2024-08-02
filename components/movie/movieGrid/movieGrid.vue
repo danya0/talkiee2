@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="relative">
     <p v-if="title" class="text-xl mb-8">{{ title }}</p>
-    <Loader class="mx-auto h-[1000px]" v-if="isLoaded" />
+    <div v-if="isLoaded" class="h-[1000px] pt-24">
+      <Loader class="mx-auto" />
+    </div>
     <div v-else class="w-full gap-4 gap-x-a grid this-grid">
       <MovieCard
         v-for="item in props.movieList"
@@ -11,6 +13,7 @@
         @click="goToMoviePage(item.kinopoiskId)"
       />
     </div>
+    <div ref="observer" class="h-12 w-full" />
   </div>
 </template>
 
@@ -20,6 +23,7 @@ import type { Movie } from '~/types/movie'
 import { useMainStore } from '~/store/mainPageStore'
 import Loader from '~/components/ui/loader.vue'
 
+const observer = ref<HTMLDivElement>()
 const store = useMainStore()
 const router = useRouter()
 const props = defineProps<{
@@ -27,6 +31,7 @@ const props = defineProps<{
   title?: string
   isLoaded?: boolean
 }>()
+const emits = defineEmits(['pagination'])
 
 const favoriteToggle = (movie: Movie) => {
   store.favoriteToggle(movie)
@@ -35,6 +40,26 @@ const favoriteToggle = (movie: Movie) => {
 const goToMoviePage = (movieId: number) => {
   router.push(`/watch/${movieId}`)
 }
+
+onMounted(() => {
+  const obs = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        // если элемент является наблюдаемым
+        if (entry.isIntersecting) {
+          emits('pagination')
+        }
+      })
+    },
+    {
+      threshold: 1,
+    },
+  )
+  if (observer.value) {
+    console.log('123')
+    obs.observe(observer.value)
+  }
+})
 </script>
 
 <style>

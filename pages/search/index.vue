@@ -6,12 +6,13 @@
       @search="search"
     />
     <MovieGrid
-      v-if="query && searchList.length"
+      v-if="searchList.length"
       class="self-stretch"
       :movie-list="searchList"
       :is-loaded="isLoaded"
+      @pagination="nextPage"
     />
-    <div v-else class="text-6xl text-center">
+    <div v-else-if="query" class="text-6xl text-center">
       По вашему запросу ничего не найдено 😢
     </div>
   </Container>
@@ -29,8 +30,11 @@ const store = useMainStore()
 
 const searchList = computed(() => store.searchList)
 const query = computed(() => route.query.s)
-const notFind = computed<boolean>(() => searchList.value.length < 1)
 const isLoaded = computed(() => store.loaded)
+
+const page = ref(1)
+const pageUpdate = ref<boolean>(false)
+const totalPages = computed(() => store.searchListTotalPages)
 
 onMounted(() => {
   if (!query.value) return
@@ -38,12 +42,31 @@ onMounted(() => {
   search()
 })
 const search = () => {
-  store.findByName(searchText.value)
+  if (page.value > 1) {
+    page.value = 1
+    pageUpdate.value = true
+  }
+  store.findByName(searchText.value, page.value)
   router.push({
     query: {
       ...route.query,
       s: searchText.value,
     },
   })
+}
+watch(
+  () => page.value,
+  () => {
+    console.log('pageUpdate.value -> ', pageUpdate.value)
+    if (pageUpdate.value) {
+      pageUpdate.value = false
+      return
+    }
+    store.findByName(searchText.value, page.value)
+  },
+)
+const nextPage = () => {
+  if (totalPages.value === page.value) return
+  page.value++
 }
 </script>

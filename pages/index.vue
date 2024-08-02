@@ -18,6 +18,7 @@
           class="self-stretch"
           :title="selectorTypeText"
           :movie-list="movieList"
+          @pagination="nextPage"
         />
       </section>
     </Container>
@@ -45,16 +46,25 @@ const isLoaded = computed(() => store.loaded)
 const previewMovie = computed(() => previewStore.previewMovie)
 const previewMoviePoster = computed(() => previewStore.previewMoviePoster)
 
-const selectorType = ref<'all' | 'movie' | 'series'>('all')
+const selectorType = ref<
+  | MovieCollections.POPULAR_SERIES
+  | MovieCollections.TOP_POPULAR_MOVIES
+  | MovieCollections.TOP_POPULAR_ALL
+>(MovieCollections.TOP_POPULAR_ALL)
 const selectorTypeText = computed(() => {
-  if (selectorType.value === 'movie') {
+  if (selectorType.value === MovieCollections.TOP_POPULAR_MOVIES) {
     return 'Популярные фильмы'
-  } else if (selectorType.value === 'series') {
+  } else if (selectorType.value === MovieCollections.POPULAR_SERIES) {
     return 'Популярные сериалы'
   } else {
     return 'Популярные фильмы и сериалы'
   }
 })
+
+const page = ref<number>(1)
+// переменная для того, чтобы не дергался watch при сбросе страницы на единицу (надо смотреть и рефачить)
+const resetPage = ref<boolean>(false)
+const totalPages = computed(() => store.totalPages)
 
 const updatePreviewMovie = async () => {
   const randomMovie = movieList.value[Randomizer.random(1, 20)]
@@ -86,22 +96,19 @@ watch(
 )
 
 watch(
-  () => {
-    switch (selectorType.value) {
-      case 'all':
-        store.loadFilms('1', MovieCollections.TOP_POPULAR_ALL)
-        break
-      case 'movie':
-        store.loadFilms('1', MovieCollections.TOP_POPULAR_MOVIES)
-        break
-      case 'series':
-        store.loadFilms('1', MovieCollections.POPULAR_SERIES)
-        break
-      default:
-        break
+  () => [selectorType.value, page.value],
+  (prevV, newV) => {
+    if (newV && newV[0] !== prevV[0]) {
+      resetPage.value = true
+      page.value = 1
     }
+    if (resetPage.value) {
+      resetPage.value = false
+      return
+    }
+    store.loadFilms(selectorType.value, page.value)
   },
-  () => selectorType.value,
+  { immediate: true },
 )
 
 const search = () => {
@@ -111,5 +118,10 @@ const search = () => {
       s: searchText.value,
     },
   })
+}
+
+const nextPage = () => {
+  if (totalPages.value === page.value) return
+  page.value++
 }
 </script>
