@@ -1,75 +1,20 @@
-# Nuxt 3 Minimal Starter
+# Talkiee
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+![preview](resources/preview.jpg)
 
-## Setup
+![movielist](resources/filmlist.png)
 
-Make sure to install the dependencies:
+## Description
+Online cinema, with the ability to search, save to favorites and view
 
-```bash
-# npm
-npm install
+Stack: Nuxt, Vue, TypeScript, Taiwind, Pinia
 
-# pnpm
-pnpm install
+## Feature
+* Display of action films and TV series
+* Displaying information about the movie on the movie page
+* Search page
+* Add to favorites, a separate page with your favorite movies
+* The ability to view online
 
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Released
+You can [view this web application](https://danya0.github.io/talkiee2/) yourself
