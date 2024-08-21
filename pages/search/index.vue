@@ -24,12 +24,13 @@
 // todo: выводить список "Недавно искали", хранить в локал сторе. С возможностью очистки
 import { useMainStore } from '~/store/mainPageStore'
 import MovieGrid from '~/components/movie/movieGrid/movieGrid.vue'
+import { useSearchStore } from '~/store/searchStore'
 
 const route = useRoute()
 const router = useRouter()
 const searchText = ref('')
 
-const store = useMainStore()
+const store = useSearchStore()
 
 const searchList = computed(() => store.finalSearchList)
 const query = computed(() => route.query.s)

@@ -92,3 +92,5 @@ export class KinopoiskApi {
     return []
   }
 }
+
+export const kp = new KinopoiskApi()

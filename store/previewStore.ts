@@ -6,13 +6,11 @@ export const usePreviewStore = defineStore('preview', {
     previewMovie: LsParser.get('previewMovie') || (null as Movie | null),
     previewMoviePoster:
       LsParser.get('previewPoster') || (null as string | null),
-    lastUpdate: LsParser.get('lastUpdatePreview'),
+    lastUpdate: (LsParser.get('lastUpdatePreview') || null) as number | null,
   }),
   actions: {
     setPreviewMovie(movie: Movie, imageLink: string) {
       const now = Date.now()
-
-      console.log('movie -> ', movie)
 
       this.previewMovie = movie
       this.previewMoviePoster = imageLink

@@ -1,16 +1,12 @@
 import { defineStore } from 'pinia'
-import { KinopoiskApi } from '~/library/kinopoiskApi'
+import { kp } from '~/library/kinopoiskApi'
 import { type Movie, MovieCollections } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
-
-const kp = new KinopoiskApi()
 
 export const useMainStore = defineStore('main', {
   state: () => ({
     movieList: [] as Movie[],
     totalPages: 0 as number,
-    searchList: [] as Movie[],
-    searchListTotalPages: 0 as number,
     loaded: false as boolean,
     favoriteList: (LsParser.get('favoriteList') || []) as Movie[],
   }),
@@ -24,31 +20,8 @@ export const useMainStore = defineStore('main', {
         return { ...movie, favorite: false }
       })
     },
-    finalSearchList(state) {
-      const favoriteIds = state.favoriteList.map((movie) => movie.kinopoiskId)
-      return state.searchList.map((movie) => {
-        if (favoriteIds.includes(movie.kinopoiskId)) {
-          return { ...movie, favorite: true }
-        }
-        return { ...movie, favorite: false }
-      })
-    },
   },
   actions: {
-    findByName(name: string, page: number) {
-      if (page === 1) this.$state.loaded = true
-      kp.getByKeyword(name, page).then((res) => {
-        if (page === 1) {
-          this.$state.loaded = false
-          this.$state.searchList = res.items
-          this.$state.searchListTotalPages = Math.ceil(
-            res.searchFilmsCountResult / page,
-          )
-        } else {
-          this.$state.searchList = [...this.$state.searchList, ...res.items]
-        }
-      })
-    },
     loadFilms(collectionType: MovieCollections, page: number) {
       if (page === this.$state.totalPages) return
 
