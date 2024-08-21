@@ -6,4 +6,7 @@ export class LsParser {
   static set(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value))
   }
+  static removeItem(key: string) {
+    localStorage.removeItem(key)
+  }
 }
