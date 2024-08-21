@@ -9,7 +9,7 @@
         v-for="item in props.movieList"
         :key="item.kinopoiskId"
         :item="item"
-        @favoriteToggle="() => favoriteToggle(item)"
+        @favoriteToggle="favoriteToggle(item)"
         @click="goToMoviePage(item.kinopoiskId)"
       />
     </div>
@@ -20,11 +20,11 @@
 <script setup lang="ts">
 import MovieCard from '~/components/movie/movieCard/movieCard.vue'
 import type { Movie } from '~/types/movie'
-import { useMainStore } from '~/store/mainPageStore'
 import Loader from '~/components/ui/loader.vue'
+import { useFavoriteStore } from '~/store/favoriteStore'
 
 const observer = ref<HTMLDivElement>()
-const store = useMainStore()
+const store = useFavoriteStore()
 const router = useRouter()
 const props = defineProps<{
   movieList: Movie[]

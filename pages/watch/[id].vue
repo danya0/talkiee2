@@ -77,9 +77,10 @@ import MovieFavoriteButton from '~/components/movie/movieFavoriteButton.vue'
 import { useMainStore } from '~/store/mainPageStore'
 import FactsBlock from '~/components/moviePage/factsBlock.vue'
 import MovieSection from '~/components/moviePage/movieSection.vue'
+import { useFavoriteStore } from '~/store/favoriteStore'
 
 const route = useRoute()
-const store = useMainStore()
+const favoriteStore = useFavoriteStore()
 
 const movieId = computed(() =>
   Array.isArray(route.params.id) ? route.params.id[0] : route.params.id,
@@ -108,7 +109,7 @@ onMounted(async () => {
   // todo: обрабатывать момент, когда в id передаем рандом значение
   // подгрузка файлов
   movie.value = await kp.getById(movieId.value)
-  movie.value.favorite = store.checkFavorite(movie.value.kinopoiskId)
+  movie.value.favorite = favoriteStore.checkFavorite(movie.value.kinopoiskId)
 
   // подгурзка фактов
   facts.value = await kp.getFacts(movieId.value).then((facts) =>
@@ -133,7 +134,7 @@ onMounted(async () => {
 
 const toggleFavorite = () => {
   if (movie.value) {
-    store.favoriteToggle(movie.value)
+    favoriteStore.favoriteToggle(movie.value)
     movie.value.favorite = !movie.value.favorite
   }
 }
