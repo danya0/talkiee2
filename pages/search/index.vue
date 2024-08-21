@@ -1,25 +1,16 @@
 <template>
   <Container class="pt-24 flex flex-col items-center">
-    <SearchBox class="w-full mb-6" v-model="searchText" @search="search" />
-    <div
+    <SearchBox
+      class="w-full sm:w-1/2 mb-6"
+      v-model="searchText"
+      @search="search"
+    />
+    <SearchHistory
       v-if="history.length"
-      class="flex flex-wrap items-center gap-x-1 gap-y-1 mb-6"
-    >
-      <span>Недавно искали:</span>
-      <span
-        v-for="item in history"
-        :key="item"
-        class="text-white/70 inline-block hover:underline py-1 px-2 rounded-md bg-black/40"
-        @click="research(item)"
-      >
-        {{ item }}
-      </span>
-      <span
-        class="underline cursor-pointer text-white/80"
-        @click="store.clearHistory"
-        >Очистить историю</span
-      >
-    </div>
+      :history="history"
+      @clear-history="store.clearHistory"
+      @research="research"
+    />
     <MovieGrid
       class="self-stretch"
       :movie-list="searchList"
@@ -39,6 +30,7 @@
 // todo: выводить список "Недавно искали", хранить в локал сторе. С возможностью очистки
 import MovieGrid from '~/components/movie/movieGrid/movieGrid.vue'
 import { useSearchStore } from '~/store/searchStore'
+import SearchHistory from '~/components/moviePage/SearchHistory.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -63,6 +55,7 @@ onActivated(() => {
   search()
 })
 const search = () => {
+  if (!searchText.value.trim()) return
   if (page.value > 1) {
     page.value = 1
     pageUpdate.value = true
