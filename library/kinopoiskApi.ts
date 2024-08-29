@@ -70,7 +70,6 @@ export class KinopoiskApi {
       type: collectionName,
       page: `${page}`,
     })
-    console.log('collection -> ', collection)
     return {
       items: collection.items.map(kinopoiskApiConverter),
       totalPages: collection.totalPages,

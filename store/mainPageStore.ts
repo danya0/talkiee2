@@ -9,6 +9,7 @@ export const useMainStore = defineStore('main', {
     movieList: [] as Movie[],
     totalPages: 0 as number,
     loaded: false as boolean,
+    collectionType: null as MovieCollections | null,
   }),
   getters: {
     finalMovieList(state) {
@@ -26,23 +27,30 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     loadFilms(collectionType: MovieCollections, page: number) {
-      if (page === this.$state.totalPages) return
+      if (page === this.$state.totalPages || this.$state.loaded) return
+      const newCollection: boolean =
+        this.$state.collectionType !== collectionType
 
-      const pageOne = page === 1
-      if (pageOne) this.$state.loaded = true
+      this.$state.loaded = true
+      if (newCollection) this.$state.movieList = []
 
-      kp.getCollections(page, collectionType).then((res) => {
-        if (pageOne) {
-          this.$state.movieList = res.items
-          this.$state.totalPages = res.totalPages
-          this.$state.loaded = false
-        } else {
+      kp.getCollections(page, collectionType)
+        .then((res) => {
           this.$state.movieList = unique([
             ...this.$state.movieList,
             ...res.items,
           ])
-        }
-      })
+          this.$state.totalPages = res.totalPages
+          this.$state.movieList = unique([
+            ...this.$state.movieList,
+            ...res.items,
+          ])
+
+          if (newCollection) this.$state.collectionType = collectionType
+        })
+        .finally(() => {
+          this.$state.loaded = false
+        })
     },
   },
 })

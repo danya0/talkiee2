@@ -19,6 +19,7 @@
           :title="selectorTypeText"
           :movie-list="movieList"
           @pagination="nextPage"
+          :pagination-loaded="paginationLoaded"
         />
       </section>
     </Container>
@@ -42,15 +43,12 @@ const kp = new KinopoiskApi()
 const searchText = ref('')
 const movieList = computed(() => store.finalMovieList)
 const isLoaded = computed(() => store.loaded)
+const paginationLoaded = ref<boolean>(false)
 
 const previewMovie = computed(() => previewStore.previewMovie)
 const previewMoviePoster = computed(() => previewStore.previewMoviePoster)
 
-const selectorType = ref<
-  | MovieCollections.POPULAR_SERIES
-  | MovieCollections.TOP_POPULAR_MOVIES
-  | MovieCollections.TOP_POPULAR_ALL
->(MovieCollections.TOP_POPULAR_ALL)
+const selectorType = ref<MovieCollections>(MovieCollections.TOP_POPULAR_ALL)
 const selectorTypeText = computed(() => {
   if (selectorType.value === MovieCollections.TOP_POPULAR_MOVIES) {
     return 'Популярные фильмы'
@@ -106,7 +104,10 @@ watch(
       resetPage.value = false
       return
     }
+
+    paginationLoaded.value = true
     store.loadFilms(selectorType.value, page.value)
+    paginationLoaded.value = false
   },
   { immediate: true },
 )

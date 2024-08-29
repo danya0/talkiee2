@@ -45,18 +45,18 @@ export const useSearchStore = defineStore('search', {
     },
     findByName(name: string, page: number) {
       const trimmedName = name.trim()
-      if (page === 1) this.$state.loaded = true
+
+      this.$state.loaded = true
+      if (page === 1) this.$state.searchList = []
+
       kp.getByKeyword(trimmedName, page).then((res) => {
-        if (page === 1) {
-          this.$state.loaded = false
-          this.$state.searchList = res.items
-          this.$state.searchListTotalPages = Math.ceil(
-            res.searchFilmsCountResult / page,
-          )
-          this.writeToHistory(trimmedName)
-        } else {
-          this.$state.searchList = [...this.$state.searchList, ...res.items]
-        }
+        this.$state.searchList = [...this.$state.searchList, ...res.items]
+        this.$state.searchListTotalPages = Math.ceil(
+          res.searchFilmsCountResult / page,
+        )
+        this.writeToHistory(trimmedName)
+
+        this.$state.loaded = false
       })
     },
   },

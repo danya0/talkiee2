@@ -27,7 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-// todo: выводить список "Недавно искали", хранить в локал сторе. С возможностью очистки
 import MovieGrid from '~/components/movie/movieGrid/movieGrid.vue'
 import { useSearchStore } from '~/store/searchStore'
 import SearchHistory from '~/components/moviePage/SearchHistory.vue'
@@ -43,8 +42,7 @@ const query = computed(() => route.query.s)
 const isLoaded = computed(() => store.loaded)
 const alreadySearched = ref<boolean>(false)
 
-const page = ref(1)
-const pageUpdate = ref<boolean>(false)
+const page = ref<number>(0)
 const totalPages = computed(() => store.searchListTotalPages)
 
 const history = computed(() => store.searchHistory.toReversed())
@@ -56,11 +54,9 @@ onActivated(() => {
 })
 const search = () => {
   if (!searchText.value.trim()) return
-  if (page.value > 1) {
-    page.value = 1
-    pageUpdate.value = true
-  }
-  store.findByName(searchText.value, page.value)
+
+  page.value = 1 // на page.value стоит вотчер, который дергает запрос поиска
+
   alreadySearched.value = true
   router.push({
     query: {
@@ -78,10 +74,6 @@ const research = (movieName: string) => {
 watch(
   () => [page.value, query.value],
   () => {
-    if (pageUpdate.value) {
-      pageUpdate.value = false
-      return
-    }
     store.findByName(searchText.value, page.value)
   },
 )

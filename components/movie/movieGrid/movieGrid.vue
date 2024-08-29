@@ -1,10 +1,7 @@
 <template>
   <div class="relative">
     <p v-if="title" class="text-xl mb-8">{{ title }}</p>
-    <div v-if="isLoaded" class="h-[1000px] pt-24">
-      <Loader class="mx-auto" />
-    </div>
-    <div v-else class="w-full gap-4 gap-x-a grid this-grid">
+    <div class="w-full gap-4 gap-x-a grid this-grid mb-10">
       <MovieCard
         v-for="item in props.movieList"
         :key="item.kinopoiskId"
@@ -12,6 +9,9 @@
         @favoriteToggle="favoriteToggle(item)"
         @click="goToMoviePage(item.kinopoiskId)"
       />
+    </div>
+    <div v-if="isLoaded" class="absolute bottom-0 left-1/2 -translate-x-1/2">
+      <Loader class="mx-auto" />
     </div>
     <div ref="observer" class="h-12 w-full" />
   </div>
@@ -47,6 +47,7 @@ onMounted(() => {
       entries.forEach((entry) => {
         // если элемент является наблюдаемым
         if (entry.isIntersecting) {
+          if (props.isLoaded) return false
           emits('pagination')
         }
       })
@@ -56,7 +57,6 @@ onMounted(() => {
     },
   )
   if (observer.value) {
-    console.log('123')
     obs.observe(observer.value)
   }
 })
