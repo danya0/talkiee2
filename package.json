@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d .output/public"
+    "deploy": "gh-pages --dotfiles -d .output/public"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.2",
