@@ -9,4 +9,7 @@ export class LsParser {
   static removeItem(key: string) {
     localStorage.removeItem(key)
   }
+  static clear() {
+    localStorage.clear()
+  }
 }
