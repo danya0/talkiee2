@@ -1,0 +1,1 @@
+class r{static get(t){const e=localStorage.getItem(t);return e?JSON.parse(e):null}static set(t,e){localStorage.setItem(t,JSON.stringify(e))}static removeItem(t){localStorage.removeItem(t)}static clear(){localStorage.clear()}}export{r as L};
