@@ -3,13 +3,14 @@ import { kp } from '~/library/kinopoiskApi'
 import { type Movie } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
 import { maxSearchHistoryItems } from '~/constants/searchConts'
+import { StorageConst } from '~/constants/storageConst'
 
 export const useSearchStore = defineStore('search', {
   state: () => ({
     searchList: [] as Movie[],
     searchListTotalPages: 0 as number,
     loaded: false as boolean,
-    searchHistory: (LsParser.get('searchHistory') || []) as string[],
+    searchHistory: (LsParser.get(StorageConst.searchHistory) || []) as string[],
   }),
   getters: {
     finalSearchList(state) {
@@ -19,7 +20,7 @@ export const useSearchStore = defineStore('search', {
   actions: {
     clearHistory() {
       this.searchHistory = []
-      LsParser.removeItem('searchHistory')
+      LsParser.removeItem(StorageConst.searchHistory)
     },
     writeToHistory(name: string) {
       const alreadyIdx = this.searchHistory.findIndex((item) => item === name)
@@ -31,7 +32,7 @@ export const useSearchStore = defineStore('search', {
         this.searchHistory.shift()
       }
       this.searchHistory.push(name)
-      LsParser.set('searchHistory', this.searchHistory)
+      LsParser.set(StorageConst.searchHistory, this.searchHistory)
     },
     findByName(name: string, page: number) {
       const trimmedName = name.trim()

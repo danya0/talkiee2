@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { type Movie } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
-import { StorageConst } from '~/constants/localStorageConst'
+import { StorageConst } from '~/constants/storageConst'
 
 export const useFavoriteStore = defineStore('favorite', {
   state: () => ({

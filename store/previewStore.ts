@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
 import type { Movie } from '~/types/movie'
+import { StorageConst } from '~/constants/storageConst'
 
 export const usePreviewStore = defineStore('preview', {
   state: () => ({
-    previewMovie: LsParser.get('previewMovie') || (null as Movie | null),
+    previewMovie:
+      LsParser.get(StorageConst.previewMovie) || (null as Movie | null),
     previewMoviePoster:
-      LsParser.get('previewPoster') || (null as string | null),
-    lastUpdate: (LsParser.get('lastUpdatePreview') || null) as number | null,
+      LsParser.get(StorageConst.previewPoster) || (null as string | null),
+    lastUpdate: (LsParser.get(StorageConst.lastUpdatePreview) || null) as
+      | number
+      | null,
   }),
   actions: {
     setPreviewMovie(movie: Movie, imageLink: string) {
@@ -16,9 +20,9 @@ export const usePreviewStore = defineStore('preview', {
       this.previewMoviePoster = imageLink
       this.lastUpdate = now
 
-      LsParser.set('previewMovie', movie)
-      LsParser.set('previewPoster', imageLink)
-      LsParser.set('lastUpdatePreview', now)
+      LsParser.set(StorageConst.previewMovie, movie)
+      LsParser.set(StorageConst.previewPoster, imageLink)
+      LsParser.set(StorageConst.lastUpdatePreview, now)
     },
   },
 })

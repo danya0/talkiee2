@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
-import { kp } from '~/library/kinopoiskApi'
-import { type Movie, MovieCollections } from '~/types/movie'
+import { type Movie } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
-import { StorageConst } from '~/constants/localStorageConst'
+import { StorageConst } from '~/constants/storageConst'
 
 export const useRatedStore = defineStore('rated', {
   state: () => ({

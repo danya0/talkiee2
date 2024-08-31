@@ -34,6 +34,7 @@ import MoviePreview from '~/components/movie/moviePreview.vue'
 import MovieSelector from '~/components/movie/movieSelector/movieSelector.vue'
 import { MovieCollections } from '~/types/movie'
 import { usePreviewStore } from '~/store/previewStore'
+import { StorageConst } from '~/constants/storageConst'
 
 const router = useRouter()
 const store = useMainStore()
@@ -81,7 +82,7 @@ const already = ref<boolean>(false)
 watch(
   async () => {
     // проверяем прошел ли день, чтоб обновить превью
-    const previewLastDate = LsParser.get('lastUpdatePreview') || null
+    const previewLastDate = LsParser.get(StorageConst.lastUpdatePreview) || null
     const passedOneDay = previewLastDate
       ? DateParser.getDifferenceDays(new Date(), previewLastDate)
       : true
