@@ -10,6 +10,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  devServer: {
+    port: 3333,
+  },
   ssr: false,
   app: {
     baseURL: '/talkiee2/',
