@@ -14,10 +14,10 @@ export const useRatedStore = defineStore('rated', {
       )
 
       if (idx !== -1) {
-        this.list[idx].userRating = rating
-
-        if (rating === 0) {
-          this.removeFromList(movie.kinopoiskId)
+        if (rating === this.list[idx].userRating) {
+          this.removeFromList(this.list[idx].kinopoiskId)
+        } else {
+          this.list[idx].userRating = rating
         }
       } else {
         this.list.push({ ...movie, userRating: rating })

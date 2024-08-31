@@ -147,7 +147,7 @@ const toggleFavorite = () => {
 
 const rate = (rating: number) => {
   if (movie.value) {
-    ratedStore.rate(movie.value, rating === movie.value.userRating ? 0 : rating)
+    ratedStore.rate(movie.value, rating)
     movie.value.userRating = rating
   }
 }

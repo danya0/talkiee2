@@ -38,9 +38,7 @@ const props = defineProps<{ rating: number }>()
 const emits = defineEmits(['rate'])
 
 const setRating = (rating: number) => {
-  const convertedRating: number =
-    rating === props.rating ? 0 : Math.abs(rating - 5) + 1
-  emits('rate', convertedRating)
+  emits('rate', Math.abs(rating - 5) + 1)
 }
 </script>
 
@@ -50,12 +48,12 @@ const setRating = (rating: number) => {
 }
 
 @media (min-width: 500px) {
-  .star:hover ~ .star path {
+  .star:hover ~ .star:not(.filled-star-gold) path {
     fill: white;
     stroke: white;
   }
 
-  .star:hover path {
+  .star:not(.filled-star-gold):hover path {
     fill: white;
     stroke: white;
   }
