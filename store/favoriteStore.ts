@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
-import { kp } from '~/library/kinopoiskApi'
-import { type Movie, MovieCollections } from '~/types/movie'
+import { type Movie } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
+import { StorageConst } from '~/constants/localStorageConst'
 
 export const useFavoriteStore = defineStore('favorite', {
   state: () => ({
-    favoriteList: (LsParser.get('favoriteList') || []) as Movie[],
+    favoriteList: (LsParser.get(StorageConst.favoriteList) || []) as Movie[],
   }),
   actions: {
     favoriteToggle(movie: Movie) {
@@ -16,7 +16,7 @@ export const useFavoriteStore = defineStore('favorite', {
       } else {
         this.$state.favoriteList.push({ ...movie, favorite: true })
       }
-      LsParser.set('favoriteList', this.$state.favoriteList)
+      LsParser.set(StorageConst.favoriteList, this.$state.favoriteList)
     },
     checkFavorite(movieId: number): boolean {
       const ids = this.favoriteList.map((item) => item.kinopoiskId)

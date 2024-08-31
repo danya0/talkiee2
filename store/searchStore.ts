@@ -3,7 +3,6 @@ import { kp } from '~/library/kinopoiskApi'
 import { type Movie } from '~/types/movie'
 import { LsParser } from '~/utils/lsParser'
 import { maxSearchHistoryItems } from '~/constants/searchConts'
-import { useFavoriteStore } from '~/store/favoriteStore'
 
 export const useSearchStore = defineStore('search', {
   state: () => ({
@@ -14,16 +13,7 @@ export const useSearchStore = defineStore('search', {
   }),
   getters: {
     finalSearchList(state) {
-      const favoriteStore = useFavoriteStore()
-      const favoriteIds = favoriteStore.favoriteList.map(
-        (movie) => movie.kinopoiskId,
-      )
-      return state.searchList.map((movie) => {
-        if (favoriteIds.includes(movie.kinopoiskId)) {
-          return { ...movie, favorite: true }
-        }
-        return { ...movie, favorite: false }
-      })
+      return setMovieFlags(state.searchList)
     },
   },
   actions: {

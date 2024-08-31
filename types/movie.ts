@@ -8,6 +8,7 @@ export type Movie = {
     genre: string
   }[]
   rating?: number | string
+  userRating: number
   year: string
   type: string
   posterUrl: string

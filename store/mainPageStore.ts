@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import { kp } from '~/library/kinopoiskApi'
 import { type Movie, MovieCollections } from '~/types/movie'
-import { LsParser } from '~/utils/lsParser'
-import { useFavoriteStore } from '~/store/favoriteStore'
 
 export const useMainStore = defineStore('main', {
   state: () => ({
@@ -13,16 +11,7 @@ export const useMainStore = defineStore('main', {
   }),
   getters: {
     finalMovieList(state) {
-      const favoriteStore = useFavoriteStore()
-      const favoriteIds = favoriteStore.favoriteList.map(
-        (movie) => movie.kinopoiskId,
-      )
-      return state.movieList.map((movie) => {
-        if (favoriteIds.includes(movie.kinopoiskId)) {
-          return { ...movie, favorite: true }
-        }
-        return { ...movie, favorite: false }
-      })
+      return setMovieFlags(state.movieList)
     },
   },
   actions: {

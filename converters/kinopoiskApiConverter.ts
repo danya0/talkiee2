@@ -15,6 +15,7 @@ export function kinopoiskApiConverter(obj: any): Movie {
     name: obj.nameRu || obj.nameEn || obj.nameOriginal || '',
     favorite: false,
     description: obj.description,
+    userRating: 0,
   }
 }
 
