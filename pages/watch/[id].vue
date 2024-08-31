@@ -1,18 +1,21 @@
 <template>
-  <Container class="pt-24" v-if="movie">
+  <Container class="pt-24" v-if="movieWithFlags">
     <div class="w-full flex items-center justify-between mb-7">
       <div v-if="genres">
-        <h1 class="text-3xl">{{ movie.name }}</h1>
+        <h1 class="text-3xl">{{ movieWithFlags.name }}</h1>
         <span class="text-white/70" v-for="(genre, idx) in genres">
           {{ genre }}{{ idx === genres.length - 1 ? '' : ', ' }}
         </span>
       </div>
-      <MovieFavoriteButton :favorite="movie.favorite" @click="toggleFavorite" />
+      <MovieFavoriteButton
+        :favorite="movieWithFlags.favorite"
+        @click="toggleFavorite"
+      />
     </div>
     <div class="flex flex-col lg:flex-row gap-y-5 gap-x-12 max-h-[600px]">
       <div
         data-kinobox="auto"
-        :data-kinopoisk="movie.kinopoiskId"
+        :data-kinopoisk="movieWithFlags.kinopoiskId"
         class="h-auto w-full lg:w-[70%] mx-auto"
       />
     </div>
@@ -34,19 +37,19 @@
       <div>
         <p class="text-lg font-bold">Год выпуска:</p>
         <div>
-          {{ movie.year }}
+          {{ movieWithFlags.year }}
         </div>
       </div>
       <div>
         <p class="text-lg font-bold">Описание:</p>
         <div>
-          {{ movie.description }}
+          {{ movieWithFlags.description }}
         </div>
       </div>
       <div class="flex gap-x-2">
         <p class="text-lg font-bold">Ваша оценка:</p>
         <div class="max-w-[200px] grow">
-          <UserRating :rating="movie.userRating" @rate="rate" />
+          <UserRating :rating="movieWithFlags.userRating" @rate="rate" />
         </div>
       </div>
     </MovieSection>
@@ -94,18 +97,24 @@ const movieId = computed(() =>
 )
 const kp = new KinopoiskApi()
 const movie = ref<Movie | null>(null)
+const movieWithFlags = computed<Movie | null>(() =>
+  movie.value ? setMovieFlags([movie.value])[0] : null,
+)
+
 const facts = ref<MovieFact[] | null>(null)
 const images = ref<MovieImage[]>([])
-const genres = computed(() => movie.value?.genres.map((item) => item.genre))
+const genres = computed(() =>
+  movieWithFlags.value?.genres.map((item) => item.genre),
+)
 const countries = computed(() =>
-  movie.value?.countries.map((item) => item.country),
+  movieWithFlags.value?.countries.map((item) => item.country),
 )
 const filmType = computed(() => {
-  if (movie.value?.type === 'FILM') {
+  if (movieWithFlags.value?.type === 'FILM') {
     return 'Фильм'
-  } else if (movie.value?.type === 'TV_SERIES') {
+  } else if (movieWithFlags.value?.type === 'TV_SERIES') {
     return 'Сериал'
-  } else if (movie.value?.type === 'MINI_SERIES') {
+  } else if (movieWithFlags.value?.type === 'MINI_SERIES') {
     return 'Мини-сериал'
   }
   return 'Фильм или сериал'
@@ -113,9 +122,7 @@ const filmType = computed(() => {
 
 onMounted(async () => {
   // todo: обрабатывать момент, когда в id передаем рандом значение
-  // подгрузка файлов
-  const res: Movie = await kp.getById(movieId.value)
-  movie.value = setMovieFlags([res])[0]
+  movie.value = await kp.getById(movieId.value)
 
   // подгурзка фактов
   facts.value = await kp.getFacts(movieId.value).then((facts) =>
@@ -139,16 +146,14 @@ onMounted(async () => {
 })
 
 const toggleFavorite = () => {
-  if (movie.value) {
-    favoriteStore.favoriteToggle(movie.value)
-    movie.value.favorite = !movie.value.favorite
+  if (movieWithFlags.value) {
+    favoriteStore.favoriteToggle(movieWithFlags.value)
   }
 }
 
 const rate = (rating: number) => {
-  if (movie.value) {
-    ratedStore.rate(movie.value, rating)
-    movie.value.userRating = rating
+  if (movieWithFlags.value) {
+    ratedStore.rate(movieWithFlags.value, rating)
   }
 }
 </script>
