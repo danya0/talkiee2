@@ -25,9 +25,7 @@ export const setMovieFlags = (movies: Movie[]): Movie[] => {
     const isRated: Movie | undefined = ratedList.find(
       (item: Movie) => item.kinopoiskId === movie.kinopoiskId,
     )
-    if (isRated) {
-      insideMovie.userRating = isRated.userRating
-    }
+    insideMovie.userRating = isRated ? isRated.userRating : 0
 
     return insideMovie
   })
