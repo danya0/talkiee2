@@ -46,7 +46,7 @@
       <div class="flex gap-x-2">
         <p class="text-lg font-bold">Ваша оценка:</p>
         <div class="max-w-[200px] grow">
-          <UserRating />
+          <UserRating :rating="movie.userRating" @rate="rate" />
         </div>
       </div>
     </MovieSection>
@@ -80,13 +80,14 @@
 import { KinopoiskApi } from '~/library/kinopoiskApi'
 import type { Movie, MovieFact, MovieImage } from '~/types/movie'
 import MovieFavoriteButton from '~/components/movie/movieFavoriteButton.vue'
-import { useMainStore } from '~/store/mainPageStore'
 import FactsBlock from '~/components/moviePage/factsBlock.vue'
 import MovieSection from '~/components/moviePage/movieSection.vue'
 import { useFavoriteStore } from '~/store/favoriteStore'
+import { useRatedStore } from '~/store/ratedStore'
 
 const route = useRoute()
 const favoriteStore = useFavoriteStore()
+const ratedStore = useRatedStore()
 
 const movieId = computed(() =>
   Array.isArray(route.params.id) ? route.params.id[0] : route.params.id,
@@ -113,8 +114,8 @@ const filmType = computed(() => {
 onMounted(async () => {
   // todo: обрабатывать момент, когда в id передаем рандом значение
   // подгрузка файлов
-  movie.value = await kp.getById(movieId.value)
-  movie.value.favorite = favoriteStore.checkFavorite(movie.value.kinopoiskId)
+  const res: Movie = await kp.getById(movieId.value)
+  movie.value = setMovieFlags([res])[0]
 
   // подгурзка фактов
   facts.value = await kp.getFacts(movieId.value).then((facts) =>
@@ -141,6 +142,13 @@ const toggleFavorite = () => {
   if (movie.value) {
     favoriteStore.favoriteToggle(movie.value)
     movie.value.favorite = !movie.value.favorite
+  }
+}
+
+const rate = (rating: number) => {
+  if (movie.value) {
+    ratedStore.rate(movie.value, rating === movie.value.userRating ? 0 : rating)
+    movie.value.userRating = rating
   }
 }
 </script>

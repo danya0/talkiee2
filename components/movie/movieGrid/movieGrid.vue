@@ -7,6 +7,7 @@
         :key="item.kinopoiskId"
         :item="item"
         @favoriteToggle="favoriteToggle(item)"
+        @rate="(rating) => rate(item, rating)"
         @click="goToMoviePage(item.kinopoiskId)"
       />
     </div>
@@ -22,9 +23,11 @@ import MovieCard from '~/components/movie/movieCard/movieCard.vue'
 import type { Movie } from '~/types/movie'
 import Loader from '~/components/ui/loader.vue'
 import { useFavoriteStore } from '~/store/favoriteStore'
+import { useRatedStore } from '~/store/ratedStore'
 
 const observer = ref<HTMLDivElement>()
 const store = useFavoriteStore()
+const rateStore = useRatedStore()
 const router = useRouter()
 const props = defineProps<{
   movieList: Movie[]
@@ -35,6 +38,10 @@ const emits = defineEmits(['pagination'])
 
 const favoriteToggle = (movie: Movie) => {
   store.favoriteToggle(movie)
+}
+
+const rate = (item: Movie, rating: number) => {
+  rateStore.rate(item, rating)
 }
 
 const goToMoviePage = (movieId: number) => {

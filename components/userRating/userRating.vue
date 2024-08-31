@@ -2,7 +2,7 @@
   <div class="flex w-full flex-row-reverse">
     <div
       class="star cursor-pointer grow flex items-center justify-center"
-      :class="{ 'filled-star-gold': props.rating && item + props.rating > 5 }"
+      :class="{ 'filled-star-gold': item + props.rating > 5 }"
       v-for="item in 5"
       :key="item"
       @click.stop="setRating(item)"
@@ -34,11 +34,13 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{ rating?: number }>()
+const props = defineProps<{ rating: number }>()
+const emits = defineEmits(['rate'])
 
 const setRating = (rating: number) => {
-  const convertedRating: number = Math.abs(rating - 5) + 1
-  console.log('rating', convertedRating)
+  const convertedRating: number =
+    rating === props.rating ? 0 : Math.abs(rating - 5) + 1
+  emits('rate', convertedRating)
 }
 </script>
 
@@ -47,14 +49,16 @@ const setRating = (rating: number) => {
   transition: 0.3s ease all;
 }
 
-.star:hover ~ .star path {
-  fill: white;
-  stroke: white;
-}
+@media (min-width: 500px) {
+  .star:hover ~ .star path {
+    fill: white;
+    stroke: white;
+  }
 
-.star:hover path {
-  fill: white;
-  stroke: white;
+  .star:hover path {
+    fill: white;
+    stroke: white;
+  }
 }
 
 .filled-star-gold path {

@@ -19,10 +19,11 @@
       </div>
       <!--   Нижний бар с оценкой пользователя   -->
       <div
-        v-if="!isMobile"
-        class="absolute transition-opacity opacity-0 group-hover:opacity-100 bottom-4 left-0 w-full z-10"
+        v-if="item.userRating || !isMobile"
+        class="absolute transition-opacity bottom-4 left-0 w-full z-10"
+        :class="{ 'opacity-0 group-hover:opacity-100': !item.userRating }"
       >
-        <UserRating />
+        <UserRating :rating="item.userRating" @rate="rate" />
       </div>
       <img
         class="w-full h-full transition-transform group-hover:scale-105 object-fill"
@@ -45,10 +46,12 @@ import UserRating from '~/components/userRating/userRating.vue'
 import { isMobile } from '~/utils/isMobile'
 
 const props = defineProps<{ item: Movie }>()
-const emits = defineEmits(['favoriteToggle'])
+const emits = defineEmits(['favoriteToggle', 'rate'])
 
 const favoriteToggle = () => {
   emits('favoriteToggle')
 }
-const favoriteTitle = computed(() => (props.item.favorite ? 'remove' : 'add'))
+const rate = (rating: number) => {
+  emits('rate', rating)
+}
 </script>

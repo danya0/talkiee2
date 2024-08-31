@@ -19,9 +19,7 @@ export const setMovieFlags = (movies: Movie[]): Movie[] => {
     const isFavorite: Movie | undefined = favoriteList.find(
       (item: Movie) => item.kinopoiskId === movie.kinopoiskId,
     )
-    if (isFavorite) {
-      insideMovie.favorite = true
-    }
+    insideMovie.favorite = !!isFavorite
 
     // rated condition
     const isRated: Movie | undefined = ratedList.find(

@@ -4,7 +4,7 @@
       ref="headerEl"
       class="transition-colors z-50 fixed left-1/2 -translate-x-1/2 flex justify-start py-2"
     >
-      <TopNavbar class="flex sm:hidden max-w-[200px]" />
+      <TopNavbar class="flex sm:hidden max-w-[230px]" />
     </MyHeader>
     <Navbar class="hidden sm:block" />
     <slot />

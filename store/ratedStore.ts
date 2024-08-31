@@ -12,11 +12,29 @@ export const useRatedStore = defineStore('rated', {
       const idx: number = this.list.findIndex(
         (item) => item.kinopoiskId === movie.kinopoiskId,
       )
+
       if (idx !== -1) {
         this.list[idx].userRating = rating
-        return
+
+        if (rating === 0) {
+          this.removeFromList(movie.kinopoiskId)
+        }
+      } else {
+        this.list.push({ ...movie, userRating: rating })
       }
-      this.list.push({ ...movie, rating })
+
+      LsParser.set(StorageConst.ratedList, this.list)
+    },
+    removeFromList(id: number) {
+      const movie: Movie | undefined = this.list.find(
+        (item) => item.kinopoiskId === id,
+      )
+      if (!movie) return
+      this.list = this.list.filter(
+        (item) => item.kinopoiskId !== movie.kinopoiskId,
+      )
+
+      LsParser.set(StorageConst.ratedList, this.list)
     },
   },
 })
