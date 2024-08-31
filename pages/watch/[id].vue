@@ -43,6 +43,12 @@
           {{ movie.description }}
         </div>
       </div>
+      <div class="flex gap-x-2">
+        <p class="text-lg font-bold">Ваша оценка:</p>
+        <div class="max-w-[200px] grow">
+          <UserRating />
+        </div>
+      </div>
     </MovieSection>
     <MovieSection title="Галерея" v-if="images.length" class="mt-16">
       <div class="relative group">
